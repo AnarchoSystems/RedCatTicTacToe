@@ -1,0 +1,477 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		28251B2926446BF6004066FE /* RedCatTicTacToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B2826446BF6004066FE /* RedCatTicTacToeApp.swift */; };
+		28251B2B26446BF6004066FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B2A26446BF6004066FE /* ContentView.swift */; };
+		28251B2D26446BF9004066FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28251B2C26446BF9004066FE /* Assets.xcassets */; };
+		28251B3026446BF9004066FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28251B2F26446BF9004066FE /* Preview Assets.xcassets */; };
+		28251B3B26446C2B004066FE /* RedCat in Frameworks */ = {isa = PBXBuildFile; productRef = 28251B3A26446C2B004066FE /* RedCat */; };
+		28251B3E26446C42004066FE /* GameReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B3D26446C42004066FE /* GameReducer.swift */; };
+		28251B412644756D004066FE /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B402644756D004066FE /* PlayerService.swift */; };
+		28251B4426447C25004066FE /* PlayerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B4326447C25004066FE /* PlayerSelector.swift */; };
+		28251B47264483E9004066FE /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B46264483E9004066FE /* AppState.swift */; };
+		28251B60264552AF004066FE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B5F264552AF004066FE /* MainMenu.swift */; };
+		28251B6326455D8E004066FE /* SetUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B6226455D8E004066FE /* SetUpScreen.swift */; };
+		28251B6626456ABF004066FE /* PlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B6526456ABF004066FE /* PlayerScreen.swift */; };
+		289E4EB326475926001ABF39 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289E4EB226475926001ABF39 /* GameView.swift */; };
+		28DDBA33264765AA0007CDB7 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA32264765AA0007CDB7 /* BoardView.swift */; };
+		28DDBA362648057F0007CDB7 /* PlayerDispatchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA352648057F0007CDB7 /* PlayerDispatchScreen.swift */; };
+		28DDBA39264834290007CDB7 /* CellButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA38264834290007CDB7 /* CellButtonView.swift */; };
+		28DDBA3C264837970007CDB7 /* ResetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA3B264837970007CDB7 /* ResetService.swift */; };
+		28DDBA41264839360007CDB7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA40264839360007CDB7 /* Player.swift */; };
+		28DDBA4426483B2E0007CDB7 /* PlayerDescriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */; };
+		28DDBA4726483D1E0007CDB7 /* PossiblePlayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */; };
+		28DDBA4C26483E410007CDB7 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4B26483E410007CDB7 /* Actions.swift */; };
+		28DDBA502648429E0007CDB7 /* RawPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */; };
+		28DDBA53264848210007CDB7 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA52264848200007CDB7 /* Statistics.swift */; };
+		28DDBA5626484CCE0007CDB7 /* RecordGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA5526484CCE0007CDB7 /* RecordGameService.swift */; };
+		28DDBA5A264851030007CDB7 /* HallOfFame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA59264851030007CDB7 /* HallOfFame.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		28251B2526446BF6004066FE /* RedCatTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedCatTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28251B2826446BF6004066FE /* RedCatTicTacToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedCatTicTacToeApp.swift; sourceTree = "<group>"; };
+		28251B2A26446BF6004066FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		28251B2C26446BF9004066FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		28251B2F26446BF9004066FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		28251B3126446BF9004066FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28251B3226446BF9004066FE /* RedCatTicTacToe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RedCatTicTacToe.entitlements; sourceTree = "<group>"; };
+		28251B3D26446C42004066FE /* GameReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReducer.swift; sourceTree = "<group>"; };
+		28251B402644756D004066FE /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
+		28251B4326447C25004066FE /* PlayerSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSelector.swift; sourceTree = "<group>"; };
+		28251B46264483E9004066FE /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		28251B5F264552AF004066FE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		28251B6226455D8E004066FE /* SetUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpScreen.swift; sourceTree = "<group>"; };
+		28251B6526456ABF004066FE /* PlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScreen.swift; sourceTree = "<group>"; };
+		289E4EB226475926001ABF39 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		28DDBA32264765AA0007CDB7 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		28DDBA352648057F0007CDB7 /* PlayerDispatchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDispatchScreen.swift; sourceTree = "<group>"; };
+		28DDBA38264834290007CDB7 /* CellButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellButtonView.swift; sourceTree = "<group>"; };
+		28DDBA3B264837970007CDB7 /* ResetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetService.swift; sourceTree = "<group>"; };
+		28DDBA40264839360007CDB7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDescriptors.swift; sourceTree = "<group>"; };
+		28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossiblePlayers.swift; sourceTree = "<group>"; };
+		28DDBA4B26483E410007CDB7 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
+		28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlayer.swift; sourceTree = "<group>"; };
+		28DDBA52264848200007CDB7 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		28DDBA5526484CCE0007CDB7 /* RecordGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordGameService.swift; sourceTree = "<group>"; };
+		28DDBA59264851030007CDB7 /* HallOfFame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFame.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28251B2226446BF6004066FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28251B3B26446C2B004066FE /* RedCat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		28251B1C26446BF6004066FE = {
+			isa = PBXGroup;
+			children = (
+				28DDBA4A26483E360007CDB7 /* Actions */,
+				289E4EB726475BBB001ABF39 /* Store */,
+				289E4EB626475BA9001ABF39 /* ModelsAndReducers */,
+				289E4EB526475B95001ABF39 /* Views */,
+				28251B2726446BF6004066FE /* RedCatTicTacToe */,
+				28251B2626446BF6004066FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		28251B2626446BF6004066FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				28251B2526446BF6004066FE /* RedCatTicTacToe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		28251B2726446BF6004066FE /* RedCatTicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				28251B2826446BF6004066FE /* RedCatTicTacToeApp.swift */,
+				28251B2C26446BF9004066FE /* Assets.xcassets */,
+				28251B3126446BF9004066FE /* Info.plist */,
+				28251B3226446BF9004066FE /* RedCatTicTacToe.entitlements */,
+				28251B2E26446BF9004066FE /* Preview Content */,
+			);
+			path = RedCatTicTacToe;
+			sourceTree = "<group>";
+		};
+		28251B2E26446BF9004066FE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				28251B2F26446BF9004066FE /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		289E4EB526475B95001ABF39 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				28251B2A26446BF6004066FE /* ContentView.swift */,
+				28251B5F264552AF004066FE /* MainMenu.swift */,
+				28251B6226455D8E004066FE /* SetUpScreen.swift */,
+				28251B6526456ABF004066FE /* PlayerScreen.swift */,
+				289E4EB226475926001ABF39 /* GameView.swift */,
+				28DDBA32264765AA0007CDB7 /* BoardView.swift */,
+				28DDBA352648057F0007CDB7 /* PlayerDispatchScreen.swift */,
+				28DDBA38264834290007CDB7 /* CellButtonView.swift */,
+				28DDBA59264851030007CDB7 /* HallOfFame.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		289E4EB626475BA9001ABF39 /* ModelsAndReducers */ = {
+			isa = PBXGroup;
+			children = (
+				28251B3D26446C42004066FE /* GameReducer.swift */,
+				28251B4326447C25004066FE /* PlayerSelector.swift */,
+				28251B46264483E9004066FE /* AppState.swift */,
+				28DDBA40264839360007CDB7 /* Player.swift */,
+				28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */,
+				28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */,
+				28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */,
+				28DDBA52264848200007CDB7 /* Statistics.swift */,
+			);
+			path = ModelsAndReducers;
+			sourceTree = "<group>";
+		};
+		289E4EB726475BBB001ABF39 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				28251B402644756D004066FE /* PlayerService.swift */,
+				28DDBA3B264837970007CDB7 /* ResetService.swift */,
+				28DDBA5526484CCE0007CDB7 /* RecordGameService.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		28DDBA4A26483E360007CDB7 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				28DDBA4B26483E410007CDB7 /* Actions.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		28251B2426446BF6004066FE /* RedCatTicTacToe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28251B3526446BF9004066FE /* Build configuration list for PBXNativeTarget "RedCatTicTacToe" */;
+			buildPhases = (
+				28251B2126446BF6004066FE /* Sources */,
+				28251B2226446BF6004066FE /* Frameworks */,
+				28251B2326446BF6004066FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedCatTicTacToe;
+			packageProductDependencies = (
+				28251B3A26446C2B004066FE /* RedCat */,
+			);
+			productName = RedCatTicTacToe;
+			productReference = 28251B2526446BF6004066FE /* RedCatTicTacToe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		28251B1D26446BF6004066FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					28251B2426446BF6004066FE = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = 28251B2026446BF6004066FE /* Build configuration list for PBXProject "RedCatTicTacToe" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 28251B1C26446BF6004066FE;
+			packageReferences = (
+				28251B3926446C2B004066FE /* XCRemoteSwiftPackageReference "RedCat" */,
+			);
+			productRefGroup = 28251B2626446BF6004066FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				28251B2426446BF6004066FE /* RedCatTicTacToe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		28251B2326446BF6004066FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28251B3026446BF9004066FE /* Preview Assets.xcassets in Resources */,
+				28251B2D26446BF9004066FE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		28251B2126446BF6004066FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28251B6626456ABF004066FE /* PlayerScreen.swift in Sources */,
+				28DDBA502648429E0007CDB7 /* RawPlayer.swift in Sources */,
+				28DDBA4426483B2E0007CDB7 /* PlayerDescriptors.swift in Sources */,
+				28DDBA3C264837970007CDB7 /* ResetService.swift in Sources */,
+				28251B412644756D004066FE /* PlayerService.swift in Sources */,
+				28DDBA39264834290007CDB7 /* CellButtonView.swift in Sources */,
+				28251B3E26446C42004066FE /* GameReducer.swift in Sources */,
+				28251B60264552AF004066FE /* MainMenu.swift in Sources */,
+				28251B2B26446BF6004066FE /* ContentView.swift in Sources */,
+				289E4EB326475926001ABF39 /* GameView.swift in Sources */,
+				28DDBA4726483D1E0007CDB7 /* PossiblePlayers.swift in Sources */,
+				28DDBA5626484CCE0007CDB7 /* RecordGameService.swift in Sources */,
+				28251B47264483E9004066FE /* AppState.swift in Sources */,
+				28251B6326455D8E004066FE /* SetUpScreen.swift in Sources */,
+				28DDBA33264765AA0007CDB7 /* BoardView.swift in Sources */,
+				28251B4426447C25004066FE /* PlayerSelector.swift in Sources */,
+				28DDBA5A264851030007CDB7 /* HallOfFame.swift in Sources */,
+				28251B2926446BF6004066FE /* RedCatTicTacToeApp.swift in Sources */,
+				28DDBA4C26483E410007CDB7 /* Actions.swift in Sources */,
+				28DDBA41264839360007CDB7 /* Player.swift in Sources */,
+				28DDBA53264848210007CDB7 /* Statistics.swift in Sources */,
+				28DDBA362648057F0007CDB7 /* PlayerDispatchScreen.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		28251B3326446BF9004066FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		28251B3426446BF9004066FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		28251B3626446BF9004066FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RedCatTicTacToe/RedCatTicTacToe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"RedCatTicTacToe/Preview Content\"";
+				DEVELOPMENT_TEAM = N2ZWNL7ZQT;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = RedCatTicTacToe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = orquidea.RedCatTicTacToe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		28251B3726446BF9004066FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RedCatTicTacToe/RedCatTicTacToe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"RedCatTicTacToe/Preview Content\"";
+				DEVELOPMENT_TEAM = N2ZWNL7ZQT;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = RedCatTicTacToe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = orquidea.RedCatTicTacToe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28251B2026446BF6004066FE /* Build configuration list for PBXProject "RedCatTicTacToe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28251B3326446BF9004066FE /* Debug */,
+				28251B3426446BF9004066FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		28251B3526446BF9004066FE /* Build configuration list for PBXNativeTarget "RedCatTicTacToe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28251B3626446BF9004066FE /* Debug */,
+				28251B3726446BF9004066FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28251B3926446C2B004066FE /* XCRemoteSwiftPackageReference "RedCat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AnarchoSystems/RedCat.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28251B3A26446C2B004066FE /* RedCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28251B3926446C2B004066FE /* XCRemoteSwiftPackageReference "RedCat" */;
+			productName = RedCat;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 28251B1D26446BF6004066FE /* Project object */;
+}
