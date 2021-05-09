@@ -35,8 +35,8 @@ struct SelectedPlayers {
     }
     
     static let reducer = selectPlayerReducer
-        .compose(with: xReducer)
-        .compose(with: oReducer)
+        .compose(with: PossiblePlayers.reducer, property: \.x)
+        .compose(with: PossiblePlayers.reducer, property: \.o)
     
     
     static let selectPlayerReducer = Reducer {
@@ -44,14 +44,6 @@ struct SelectedPlayers {
             (action: Actions.SelectPlayer, state: inout SelectedPlayers) in
             state[action.player] = action.newValue
         }
-    }
-    
-    static let xReducer = Reducer(\SelectedPlayers.x){
-        PossiblePlayers.reducer
-    }
-    
-    static let oReducer = Reducer(\SelectedPlayers.o){
-        PossiblePlayers.reducer
     }
     
 }

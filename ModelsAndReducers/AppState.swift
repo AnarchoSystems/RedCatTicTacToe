@@ -33,24 +33,6 @@ enum AppState : Emptyable {
                                       ResetService(detail: \.board)])
     }
     
-    static let reducer = AppReducer()
-    
-    struct AppReducer : ReducerWrapper {
-        
-        let body = Reducer {
-            playingReducer
-                .compose(with: lobbyReducer)
-                .compose(with: gotoMainMenuReducer)
-                .compose(with: goToHallOfFameReducer)
-                .compose(with: startGameReducer)
-                .compose(with: setUpReducer)
-                .compose(with: mainMenuBackgroundBoardReducer)
-                .compose(with: recordGameResultReducer)
-                .handlingLists()
-        }
-        
-    }
-    
     var board : Board? {
         switch self {
         case .mainMenu(let board):
@@ -71,6 +53,25 @@ enum AppState : Emptyable {
         case .playing(let state):
             return state.board.currentPlayer.map{state.players[$0].player}
         }
+    }
+    
+    
+    static let reducer = AppReducer()
+    
+    struct AppReducer : ReducerWrapper {
+        
+        let body = Reducer {
+            gotoMainMenuReducer
+                .compose(with: playingReducer)
+                .compose(with: SelectedPlayers.reducer, aspect: /AppState.lobby)
+                .compose(with: goToHallOfFameReducer)
+                .compose(with: startGameReducer)
+                .compose(with: setUpReducer)
+                .compose(with: mainMenuBackgroundBoardReducer)
+                .compose(with: recordGameResultReducer)
+                .handlingLists()
+        }
+        
     }
     
     static let goToHallOfFameReducer = Reducer {
@@ -96,10 +97,6 @@ enum AppState : Emptyable {
         Reducer(\.board){
             Board.reducer
         }
-    }
-    
-    static let lobbyReducer = Reducer(/AppState.lobby) {
-        SelectedPlayers.reducer
     }
     
     static let gotoMainMenuReducer = Reducer {
