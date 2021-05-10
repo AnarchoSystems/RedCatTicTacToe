@@ -9,6 +9,8 @@ import Foundation
 import RedCat
 
 
+//MARK: Model
+
 struct GameStats : Codable {
     
     let key : GameStatsKey
@@ -34,6 +36,21 @@ struct GameStatsKey : Hashable, Codable {
 
 extension AppState {
     
+    
+    subscript(gameStatsFor statsKey: GameStatsKey) -> GameStats {
+        get {
+            UserDefaults.standard.data(forKey: statsKey.string)
+                .flatMap{try? JSONDecoder().decode(GameStats.self, from: $0)}
+            ?? GameStats(key: statsKey)
+        }
+        set {
+            let data = try! JSONEncoder().encode(newValue)
+            UserDefaults.standard.setValue(data, forKey: statsKey.string)
+        }
+    }
+    
+    //MARK: Reducers
+    
     static let recordGameResultReducer = Reducer {
         recordWinReducer.compose(with: recordTieReducer)
     }
@@ -50,20 +67,9 @@ extension AppState {
         state[gameStatsFor: action.p2].ties[action.p1].modify(default: 1, inc)
     }
     
-    
-    subscript(gameStatsFor statsKey: GameStatsKey) -> GameStats {
-        get {
-            UserDefaults.standard.data(forKey: statsKey.string)
-                .flatMap{try? JSONDecoder().decode(GameStats.self, from: $0)}
-            ?? GameStats(key: statsKey)
-        }
-        set {
-            let data = try! JSONEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: statsKey.string)
-        }
-    }
-    
 }
+
+//MARK: Helpers
 
 fileprivate func inc(_ num: inout Int) {
     num += 1

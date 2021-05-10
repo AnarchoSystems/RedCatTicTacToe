@@ -30,12 +30,12 @@ struct ContentView: View {
                 menuBackground(board).disabled(true)
                 MainMenu()
             }
-        case .lobby(let selection):
-            nonMenuScreen(SetUpScreen(selection: selection))
+        case .lobby:
+            nonMenuScreen(SetUpScreen())
         case .hallOfFame:
             nonMenuScreen(HallOfFame())
-        case .playing(let playingState):
-            nonMenuScreen(GameView(state: playingState))
+        case .playing:
+            nonMenuScreen(GameView())
         }
     }
     
@@ -59,7 +59,7 @@ struct ContentView: View {
     
     
     func menuBackground(_ board: Board) -> some View {
-        return BoardView(board: board)
+        return BoardView()
             .padding()
             .blur(radius: 3)
     }

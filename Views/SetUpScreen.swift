@@ -13,24 +13,33 @@ import RedCat
 struct SetUpScreen : View {
     
     @EnvironmentObject var store : CombineStore<AppState.AppReducer>
-    let selection : SelectedPlayers
+    
+    func viewState(_ appState: AppState) -> SelectedPlayers {
+        guard case .lobby(let players) = appState else {
+           return SelectedPlayers()
+        }
+        return players
+    }
     
     var body: some View {
         
-        GeometryReader {geo in
-            VStack(spacing: 0) {
-                players
-                    .frame(width: geo.size.width,
-                           height: 0.9 * geo.size.height)
-                startButton
-                    .frame(width: geo.size.width,
-                           height: 0.1 * geo.size.height)
+        store.withViewStore(viewState){store in
+            
+            GeometryReader {geo in
+                VStack(spacing: 0) {
+                    players(store.state)
+                        .frame(width: geo.size.width,
+                               height: 0.9 * geo.size.height)
+                    startButton(store.state)
+                        .frame(width: geo.size.width,
+                               height: 0.1 * geo.size.height)
+                }
             }
         }
         
     }
     
-    var players : some View {
+    func players(_ selection: SelectedPlayers) -> some View {
         
         GeometryReader{geo in
             HStack(spacing: 0) {
@@ -50,12 +59,13 @@ struct SetUpScreen : View {
         
     }
     
-    var startButton : some View {
-            Button("Start!",
-                   action: start)
+    func startButton(_ selection: SelectedPlayers) -> some View {
+        Button("Start!"){
+            start(with: selection)
+        }
     }
     
-    func start() {
+    func start(with selection: SelectedPlayers) {
         store.send(Actions.StartGame(selection: selection))
     }
     
@@ -65,7 +75,7 @@ struct SetUpScreen : View {
 struct SetUpPreview : PreviewProvider {
     
     static var previews: some View {
-        SetUpScreen(selection: SelectedPlayers())
+        SetUpScreen()
             .environmentObject(AppState.makeStore())
     }
     

@@ -9,23 +9,26 @@ import SwiftUI
 import RedCat
 
 
-extension BoardView {
-    init(board: Board) {
-        var board = board
-        board.lastModificationAttempt = Date()
-        var players = SelectedPlayers()
-        players.x = .randomAI(RandomAI(player: .x))
-        players.o = .randomAI(RandomAI(player: .o))
-        playingState = PlayingState(board: board,
-                                    players: players)
-    }
-}
 
 struct BoardView : View {
     
     @EnvironmentObject var store : CombineStore<AppState.AppReducer>
     
-    let playingState : PlayingState
+    var playingState : PlayingState {
+        switch store.state {
+        case .mainMenu(let board):
+            let aiX = PossiblePlayers.randomAI(RandomAI(player: .x))
+            let aiO = PossiblePlayers.randomAI(RandomAI(player: .o))
+            let players = SelectedPlayers(x: aiX, o: aiO)
+            return PlayingState(board: board,
+                                players: players)
+        case .hallOfFame, .lobby:
+            return PlayingState(board: Board(),
+                                players: SelectedPlayers())
+        case .playing(let state):
+            return state
+        }
+    }
     
     var board : Board {
         playingState.board
@@ -117,7 +120,7 @@ extension CGRect {
 struct BoardPreview : PreviewProvider {
     
     static var previews: some View {
-        BoardView(board: board)
+        BoardView()
             .environmentObject(AppState.makeStore())
     }
     

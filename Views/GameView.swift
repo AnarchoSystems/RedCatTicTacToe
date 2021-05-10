@@ -13,35 +13,47 @@ import RedCat
 struct GameView : View {
     
     @EnvironmentObject var store : CombineStore<AppState.AppReducer>
-    let state : PlayingState
+    
+    func viewState(_ appState: AppState) -> PlayingState {
+        guard case .playing(let state) = appState else {
+            return PlayingState(board: Board(),
+                                players: SelectedPlayers())
+        }
+        return state
+    }
     
     var body : some View {
-        GeometryReader {geo in
-            VStack(spacing: 0) {
-                stats
-                    .padding()
-                    .frame(width: geo.size.width,
-                            height: 0.05 * geo.size.height)
-                Divider()
-                BoardView(playingState: state)
-                    .padding(30)
-                    .frame(width: geo.size.width,
-                            height: 0.95 * geo.size.height)
+        
+        store.withViewStore(viewState){store in
+            GeometryReader {geo in
+                VStack(spacing: 0) {
+                    stats(stage: store.state.board.stage,
+                          players: store.state.players)
+                        .padding()
+                        .frame(width: geo.size.width,
+                               height: 0.05 * geo.size.height)
+                    Divider()
+                    BoardView()
+                        .padding(30)
+                        .frame(width: geo.size.width,
+                               height: 0.95 * geo.size.height)
+                }
             }
         }
     }
     
-    var stats : some View {
+    func stats(stage: GameStage,
+               players: SelectedPlayers) -> some View {
         HStack {
-            Text(stateText)
+            Text(stateText(stage))
             Button("Restart") {
-                store.send(Actions.StartGame(selection: state.players))
+                store.send(Actions.StartGame(selection: players))
             }
         }
     }
     
-    var stateText : String {
-        switch state.board.stage {
+    func stateText(_ stage: GameStage) -> String {
+        switch stage {
         case .running(let currentPlayer):
             return "Current player: " + String(currentPlayer.rawValue)
         case .tie:
@@ -56,8 +68,7 @@ struct GameView : View {
 
 struct GamePreview : PreviewProvider {
     static var previews : some View {
-        GameView(state: PlayingState(board: Board(),
-                                     players: players))
+        GameView()
     }
     static var players : SelectedPlayers {
         SelectedPlayers()
