@@ -13,13 +13,13 @@ import RedCat
 struct PlayerScreen : View {
     
     let player : Player
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     let selection : SelectedPlayers
     @Environment(\.undoManager) var undoManager
     
     var body: some View {
         
-        GeometryReader{geo in
+        GeometryReader {geo in
             VStack(spacing: 0) {
                 title
                     .frame(width: geo.size.width,
@@ -43,8 +43,8 @@ struct PlayerScreen : View {
         let newValue = PossiblePlayers(rawPlayer: rawPlayer,
                                        player: player)
         let action = Actions.SelectPlayer(player: player,
-                             oldValue: selection[player],
-                             newValue: newValue)
+                                          oldValue: selection[player],
+                                          newValue: newValue)
         store.send(action)
     }
     
@@ -55,18 +55,17 @@ struct PlayerScreen : View {
     
     var title : some View {
         VStack(spacing: 0) {
-        Text(String(player.rawValue))
-            .font(.largeTitle)
-            .padding()
+            Text(String(player.rawValue))
+                .font(.largeTitle)
+                .padding()
             Divider()
         }
     }
     
     var selector : some View {
         Picker("Player",
-               selection: binding){
-            ForEach(RawPlayer.allCases, id: \.self)
-            {rawPlayer in
+               selection: binding) {
+            ForEach(RawPlayer.allCases, id: \.self) {rawPlayer in
                 Text(rawPlayer.rawValue)
             }
         }
@@ -74,12 +73,12 @@ struct PlayerScreen : View {
     
     
     var description : some View {
-        GeometryReader{geo in
-        Text(selection[player].description)
-            .frame(width: geo.size.width,
-                   height: geo.size.height)
+        GeometryReader {geo in
+            Text(selection[player].description)
+                .frame(width: geo.size.width,
+                       height: geo.size.height)
         }
-            .border(Color.black, width: 2)
+        .border(Color.black, width: 2)
         .padding(.vertical, 30)
         .padding(.horizontal, 50)
     }

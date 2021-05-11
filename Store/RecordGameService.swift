@@ -17,7 +17,7 @@ class RecordGameService : Service<AppState> {
     override func afterUpdate<Action>(store: Store<AppState>, action: Action, environment: Dependencies) {
         guard
             case .playing(let state) = store.state,
-            state.board.lastModification != lastMove else{
+            state.board.lastModification != lastMove else {
             return
         }
         lastMove = state.board.lastModification
@@ -25,10 +25,10 @@ class RecordGameService : Service<AppState> {
         case .running:
             ()
         case .tie:
-            store.send(Actions.RecordTie(p1: GameStatsKey(player: .x,
-                                                          rawPlayer: state.players.x.rawPlayer),
-                                         p2: GameStatsKey(player: .o,
-                                                          rawPlayer: state.players.o.rawPlayer)))
+            store.send(Actions.RecordTie(player1: GameStatsKey(player: .x,
+                                                               rawPlayer: state.players.x.rawPlayer),
+                                         player2: GameStatsKey(player: .o,
+                                                               rawPlayer: state.players.o.rawPlayer)))
         case .won(let winner, _):
             store.send(Actions.RecordWin(winner: GameStatsKey(player: winner,
                                                               rawPlayer: state.players[winner].rawPlayer),

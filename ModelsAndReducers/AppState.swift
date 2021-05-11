@@ -24,7 +24,7 @@ enum AppState : Emptyable {
     
     static let empty : AppState = .mainMenu(Board())
     
-    static func makeStore() -> CombineStore<AppReducer> {
+    static func makeStore() -> CombineStore<AppState> {
         Store.combineStore(initialState: .mainMenu(Board()),
                            reducer: reducer,
                            environment: [:],
@@ -47,11 +47,11 @@ enum AppState : Emptyable {
     var currentPlayer : PlayerDescriptor? {
         switch self {
         case .mainMenu(let board):
-            return board.currentPlayer.map{RandomAI(player: $0)}
+            return board.currentPlayer.map {RandomAI(player: $0)}
         case .lobby, .hallOfFame:
             return nil
         case .playing(let state):
-            return state.board.currentPlayer.map{state.players[$0].player}
+            return state.board.currentPlayer.map {state.players[$0].player}
         }
     }
     
@@ -75,7 +75,7 @@ enum AppState : Emptyable {
     }
     
     static let goToHallOfFameReducer = Reducer {
-        (action: Actions.GoToHallOfFame, state: inout AppState) in
+        (_: Actions.GoToHallOfFame, state: inout AppState) in
         state = .hallOfFame
     }
     
@@ -84,7 +84,7 @@ enum AppState : Emptyable {
     }
     
     static let setUpReducer = Reducer {
-        (action: Actions.SetUpGame, state: inout AppState) in
+        (_: Actions.SetUpGame, state: inout AppState) in
         state = .lobby(SelectedPlayers())
     }
     
@@ -94,13 +94,13 @@ enum AppState : Emptyable {
     }
     
     static let playingReducer = Reducer(/AppState.playing) {
-        Reducer(\.board){
+        Reducer(\.board) {
             Board.reducer
         }
     }
     
     static let gotoMainMenuReducer = Reducer {
-        (action: Actions.GoToMainMenu, state: inout AppState) in
+        (_: Actions.GoToMainMenu, state: inout AppState) in
         state = .mainMenu(Board())
     }
     

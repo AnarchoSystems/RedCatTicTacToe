@@ -29,14 +29,14 @@ enum Actions {
         }
     }
     
-    struct SetUpGame : ActionProtocol{}
+    struct SetUpGame : ActionProtocol {}
     
-    struct StartGame : ActionProtocol{
+    struct StartGame : ActionProtocol {
         let selection : SelectedPlayers
     }
     
-    struct GoToMainMenu : ActionProtocol{
-        fileprivate init(){}
+    struct GoToMainMenu : ActionProtocol {
+        fileprivate init() {}
     }
     
     @ActionBuilder
@@ -74,11 +74,11 @@ enum Actions {
     
     struct RecordTie : ActionProtocol {
         
-        let p1 : GameStatsKey
-        let p2 : GameStatsKey
+        let player1 : GameStatsKey
+        let player2 : GameStatsKey
         
     }
     
-    struct GoToHallOfFame : ActionProtocol{}
+    struct GoToHallOfFame : ActionProtocol {}
     
 }

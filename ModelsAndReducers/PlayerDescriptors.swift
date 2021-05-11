@@ -8,7 +8,7 @@
 import Foundation
 import RedCat
 
-//MARK: Human
+// MARK: Human
 
 struct HumanPlayer : PlayerDescriptor {
     
@@ -24,14 +24,14 @@ struct HumanPlayer : PlayerDescriptor {
     
 }
 
-//MARK: RandomAI 
+// MARK: RandomAI
 
 struct RandomAI : PlayerDescriptor {
     
     let player : Player
     var delayMs : Int
     
-    init(player: Player, delayMs: Int = 200){
+    init(player: Player, delayMs: Int = 200) {
         self.player = player
         self.delayMs = delayMs
     }
@@ -46,12 +46,12 @@ struct RandomAI : PlayerDescriptor {
     
     func makeMove(board: Board, makeMove: @escaping (RowCol) -> Void) {
         
-        let possibleMoves = (0..<3).flatMap{i in
-            (0..<3).map{j in (i,j)}
-        }.filter{board[row: $0, col: $1] == nil}
-        if let (i, j) = possibleMoves.randomElement() {
+        let possibleMoves = (0..<3).flatMap {row in
+            (0..<3).map {col in (row, col)}
+        }.filter {board[row: $0, col: $1] == nil}
+        if let (row, col) = possibleMoves.randomElement() {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMs)) {
-                makeMove(RowCol(row: i, col: j))
+                makeMove(RowCol(row: row, col: col))
             }
         }
     }

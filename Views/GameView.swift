@@ -12,7 +12,7 @@ import RedCat
 
 struct GameView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     
     func viewState(_ appState: AppState) -> PlayingState {
         guard case .playing(let state) = appState else {
@@ -24,7 +24,7 @@ struct GameView : View {
     
     var body : some View {
         
-        store.withViewStore(viewState){store in
+        store.withViewStore(viewState) {store in
             GeometryReader {geo in
                 VStack(spacing: 0) {
                     stats(stage: store.state.board.stage,

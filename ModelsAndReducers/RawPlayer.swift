@@ -7,14 +7,14 @@
 
 
 enum RawPlayer : String, Hashable, CaseIterable, Codable {
-    case Human
+    case human
     case randomAI = "Random AI"
 }
 
 extension PossiblePlayers {
-    init(rawPlayer: RawPlayer, player: Player){
+    init(rawPlayer: RawPlayer, player: Player) {
         switch rawPlayer {
-        case .Human:
+        case .human:
             self = .human(HumanPlayer())
         case .randomAI:
             self = .randomAI(RandomAI(player: player))
@@ -23,7 +23,7 @@ extension PossiblePlayers {
     var rawPlayer : RawPlayer {
         switch self {
         case .human:
-            return .Human
+            return .human
         case .randomAI:
             return .randomAI
         }

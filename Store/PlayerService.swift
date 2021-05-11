@@ -15,9 +15,9 @@ struct RowCol {
 
 
 protocol PlayerDescriptor {
-    var title : String{get}
-    var description : String{get}
-    //to be called by services -- sideeffects allowed, direct mutation disallowed
+    var title : String {get}
+    var description : String {get}
+    // to be called by services -- sideeffects allowed, direct mutation disallowed
     func makeMove(board: Board, makeMove: @escaping (RowCol) -> Void)
 }
 
@@ -31,7 +31,7 @@ class PlayerService : DetailService<AppState, Board?> {
             let board = newValue,
             let player = board.currentPlayer {
             store.state.currentPlayer?
-                .makeMove(board: board){rowCol in
+                .makeMove(board: board) {rowCol in
                     store.send(Actions.MakeMove(player: player,
                                                 row: rowCol.row,
                                                 col: rowCol.col))

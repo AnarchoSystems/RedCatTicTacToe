@@ -9,7 +9,7 @@ import Foundation
 import RedCat
 
 
-//MARK: Model
+// MARK: Model
 
 struct GameStats : Codable {
     
@@ -40,16 +40,17 @@ extension AppState {
     subscript(gameStatsFor statsKey: GameStatsKey) -> GameStats {
         get {
             UserDefaults.standard.data(forKey: statsKey.string)
-                .flatMap{try? JSONDecoder().decode(GameStats.self, from: $0)}
+                .flatMap {try? JSONDecoder().decode(GameStats.self, from: $0)}
             ?? GameStats(key: statsKey)
         }
         set {
+            // swiftlint:disable:next force_try
             let data = try! JSONEncoder().encode(newValue)
             UserDefaults.standard.setValue(data, forKey: statsKey.string)
         }
     }
     
-    //MARK: Reducers
+    // MARK: Reducers
     
     static let recordGameResultReducer = Reducer {
         recordWinReducer.compose(with: recordTieReducer)
@@ -63,13 +64,13 @@ extension AppState {
     
     fileprivate static let recordTieReducer = Reducer {
         (action: Actions.RecordTie, state: inout AppState) in
-        state[gameStatsFor: action.p1].ties[action.p2].modify(default: 1, inc)
-        state[gameStatsFor: action.p2].ties[action.p1].modify(default: 1, inc)
+        state[gameStatsFor: action.player1].ties[action.player2].modify(default: 1, inc)
+        state[gameStatsFor: action.player2].ties[action.player1].modify(default: 1, inc)
     }
     
 }
 
-//MARK: Helpers
+// MARK: Helpers
 
 fileprivate func inc(_ num: inout Int) {
     num += 1

@@ -19,8 +19,8 @@ class ResetService : DetailService<AppState, Board?> {
         case .running:
             ()
         case .tie, .won:
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)){
-                guard case .mainMenu = store.state else{return}
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                guard case .mainMenu = store.state else {return}
                 store.send(Actions.goToMainMenu(store.state))
             }
         }

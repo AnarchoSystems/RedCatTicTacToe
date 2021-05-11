@@ -50,6 +50,6 @@ struct CellButtonStyle : ButtonStyle {
 
 struct CellPreview : PreviewProvider {
     static var previews: some View {
-        CellButton(label: .o){}
+        CellButton(label: .o) {}
     }
 }

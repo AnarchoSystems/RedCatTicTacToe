@@ -8,7 +8,7 @@
 import RedCat
 import Foundation
 
-//MARK: MODEL 
+// MARK: MODEL
 
 
 enum GameStage : Equatable {
@@ -29,16 +29,16 @@ enum VictoryWitness : CaseIterable, Equatable {
             + (0..<3).map(VictoryWitness.col)
             + [.diag1, .diag2, .otherPlayerHasWithdrawn]
     }
-    var indices : [(row: Int, col: Int)]{
+    var indices : [(row: Int, col: Int)] {
         switch self {
         case .row(let idx):
-            return (0..<3).map{(idx, $0)}
+            return (0..<3).map {(idx, $0)}
         case .col(let idx):
-            return (0..<3).map{($0, idx)}
+            return (0..<3).map {($0, idx)}
         case .diag1:
-            return (0..<3).map{($0, $0)}
+            return (0..<3).map {($0, $0)}
         case .diag2:
-            return (0..<3).map{(2 - $0, $0)}
+            return (0..<3).map {(2 - $0, $0)}
         case .otherPlayerHasWithdrawn:
             return []
         }
@@ -72,7 +72,7 @@ public struct Board : Equatable {
     
 }
 
-//MARK: REDUCER
+// MARK: REDUCER
 
 extension Board {
     
@@ -100,13 +100,14 @@ extension Board {
     }
     
     struct MoveReducer : ReducerProtocol {
-        
+       
+        typealias Action = Actions.MakeMove
         typealias State = Board
         
         func apply(_ action: Actions.MakeMove, to state: inout Board) {
             
-            //check that the came is running
-            //and that the move is made by the right player
+            // check that the came is running
+            // and that the move is made by the right player
             
             guard
                 case .running(let player) = state.stage,
@@ -114,23 +115,23 @@ extension Board {
                 return
             }
             
-            //update attempted modification date
+            // update attempted modification date
             let now = Date()
             state.lastModificationAttempt = now
             
-            //check that field is empty
+            // check that field is empty
             
             guard state[row: action.row, col: action.col] == nil else {
                 return
             }
             
-            //claim field and update last successful move
+            // claim field and update last successful move
             
             state[row: action.row, col: action.col] = player
             state.lastSuccessfulMove = action
             state.lastModification = now 
             
-            //update game stage
+            // update game stage
             
             state.stage = endWithWinner(state) ??
                 endWithTie(state) ??
@@ -144,10 +145,10 @@ extension Board {
         
         func endWithWinner(_ game: Board) -> GameStage? {
             for witness in VictoryWitness.allCases {
-                let players = Set(witness.indices.map{game[row: $0, col: $1]})
+                let players = Set(witness.indices.map {game[row: $0, col: $1]})
                 if players.count == 1,
                    !players.contains(nil) {
-                    return .won(winner: players.compactMap{$0}.first!,
+                    return .won(winner: players.compactMap {$0}.first!,
                                 witness: witness)
                 }
             }

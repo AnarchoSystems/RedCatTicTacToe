@@ -5,6 +5,7 @@
 //  Created by Markus Pfeifer on 09.05.21.
 //
 
+// swiftlint:disable identifier_name
 
 enum Player : String, Hashable, CaseIterable, Codable {
     case x = "X"

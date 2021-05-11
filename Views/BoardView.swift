@@ -12,7 +12,7 @@ import RedCat
 
 struct BoardView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     
     var playingState : PlayingState {
         switch store.state {
@@ -50,13 +50,13 @@ struct BoardView : View {
     }
     
     var body: some View {
-        GeometryReader{geo in
+        GeometryReader {geo in
             let totalSize = min(geo.size.width,
                                 geo.size.height)
             LazyVGrid(columns: gridItems(totalSize: totalSize)) {
-                ForEach(0..<3){colIdx in
-                    LazyHGrid(rows: gridItems(totalSize: totalSize)){
-                        ForEach(0..<3){rowIdx in
+                ForEach(0..<3) {colIdx in
+                    LazyHGrid(rows: gridItems(totalSize: totalSize)) {
+                        ForEach(0..<3) {rowIdx in
                             cellView(row: rowIdx,
                                      col: colIdx)
                                 .scaledToFill()
@@ -68,10 +68,10 @@ struct BoardView : View {
     }
     
     func cellView(row: Int, col: Int) -> some View {
-        CellButton(label: board[row: row, col: col]){
+        CellButton(label: board[row: row, col: col]) {
             attemptMove(row: row, col: col)
         }
-        .foregroundColor(winningRowsCols.contains{row == $0 && col == $1} ? .red :
+        .foregroundColor(winningRowsCols.contains {row == $0 && col == $1} ? .red :
                             row == lastRow
                             && col == lastCol ?
                             .yellow :
@@ -83,7 +83,7 @@ struct BoardView : View {
         for player in Player.allCases {
             
             if case .human = playingState.players[player],
-               board.currentPlayer == player{
+               board.currentPlayer == player {
                 
                 store.send(Actions.MakeMove(player: player,
                                             row: row,

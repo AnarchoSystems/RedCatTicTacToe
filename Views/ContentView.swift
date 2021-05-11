@@ -12,7 +12,7 @@ import CasePaths
 
 struct ContentView: View {
     
-    @StateObject var store : CombineStore<AppState.AppReducer> = AppState.makeStore()
+    @StateObject var store : CombineStore<AppState> = AppState.makeStore()
     
     @ViewBuilder
     var body: some View {
@@ -40,7 +40,7 @@ struct ContentView: View {
     }
     
     func nonMenuScreen<V : View>(_ view: V) -> some View {
-        GeometryReader{geo in
+        GeometryReader {geo in
             VStack(spacing: 0) {
                 Button("Main menu",
                        action: backToMainMenu)
@@ -53,7 +53,7 @@ struct ContentView: View {
         }
     }
     
-    func backToMainMenu(){
+    func backToMainMenu() {
         store.send(Actions.goToMainMenu(store.state))
     }
     

@@ -11,19 +11,19 @@ import RedCat
 
 struct MainMenu : View {
     
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     
     var body: some View {
         
         VStack {
             
-            Button("Start Game"){
+            Button("Start Game") {
                 store.send(Actions.SetUpGame())
             }
-            Button("Hall of Fame"){
+            Button("Hall of Fame") {
                 store.send(Actions.GoToHallOfFame())
             }
-            Button("Leave"){
+            Button("Leave") {
                 exit(EXIT_SUCCESS)
             }
             

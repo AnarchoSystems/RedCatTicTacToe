@@ -12,8 +12,10 @@ import Foundation
 
 struct SelectedPlayers {
     
+    // swiftlint:disable identifier_name
     var x : PossiblePlayers = .human(HumanPlayer())
     var o : PossiblePlayers = .randomAI(RandomAI(player: .o))
+    // swiftlint:enable identifier_name
     
     subscript(_ player: Player) -> PossiblePlayers {
         get {

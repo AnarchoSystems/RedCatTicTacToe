@@ -8,6 +8,7 @@
 import RedCat
 import CasePaths
 
+// swiftlint:disable identifier_name
 
 enum PossiblePlayers : Emptyable {
     
@@ -45,7 +46,7 @@ enum PossiblePlayers : Emptyable {
     
     static let reducer = randomAIReducer
     
-    static let randomAIReducer = Reducer(/PossiblePlayers.randomAI){
+    static let randomAIReducer = Reducer(/PossiblePlayers.randomAI) {
         RandomAI.reducer
     }
     

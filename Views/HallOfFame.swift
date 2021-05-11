@@ -11,30 +11,30 @@ import RedCat
 
 struct HallOfFame : View {
     
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     
     var body : some View {
-        GeometryReader{geo in
+        GeometryReader {geo in
             VStack(spacing: 0) {
-         Text("HALL OF FAME")
-            .font(.largeTitle)
-            .padding()
-            .frame(width: geo.size.width,
-                   height: 0.15 * geo.size.height)
+                Text("HALL OF FAME")
+                    .font(.largeTitle)
+                    .padding()
+                    .frame(width: geo.size.width,
+                           height: 0.15 * geo.size.height)
                 Divider().padding(.horizontal)
-            items
-                .frame(width: geo.size.width,
-                       height: 0.85 * geo.size.height)
-        }
+                items
+                    .frame(width: geo.size.width,
+                           height: 0.85 * geo.size.height)
+            }
         }
     }
     
     var items : some View {
         
-        HStack(spacing: 0){
+        HStack(spacing: 0) {
             ForEach(0..<oKeys.count + 1) {colIdx in
                 VStack(spacing: 0) {
-                    ForEach(0..<xKeys.count + 1){rowIdx in
+                    ForEach(0..<xKeys.count + 1) {rowIdx in
                         ZStack {
                             if colIdx == 0 && rowIdx == 0 {
                                 angle.scaledToFit()
@@ -57,19 +57,22 @@ struct HallOfFame : View {
     @ViewBuilder
     func extendedCell(_ rowIdx: Int, _ colIdx: Int) -> some View {
         
+        // swiftlint:disable identifier_name
         switch (rowIdx, colIdx) {
         
         case (0, 0):
             cornerView
-        case (0, let y):
-            Text(oKeys[y - 1].rawPlayer.rawValue)
+        case (0, let o):
+            Text(oKeys[o - 1].rawPlayer.rawValue)
         case (let x, 0):
             Text(xKeys[x - 1].rawPlayer.rawValue)
         default:
-        cell(key1: xKeys[rowIdx - 1],
-             key2: oKeys[colIdx - 1])
-        
+            cell(key1: xKeys[rowIdx - 1],
+                 key2: oKeys[colIdx - 1])
+            
         }
+        // swiftlint:enable identifier_name
+        
         
     }
     
@@ -128,14 +131,14 @@ struct HallOfFame : View {
     }
     
     var xKeys : [GameStatsKey] {
-            RawPlayer.allCases.map{raw in
+            RawPlayer.allCases.map {raw in
                 GameStatsKey(player: .x,
                              rawPlayer: raw)
             }
     }
     
     var oKeys : [GameStatsKey] {
-        RawPlayer.allCases.map{raw in
+        RawPlayer.allCases.map {raw in
             GameStatsKey(player: .o,
                          rawPlayer: raw)
         }

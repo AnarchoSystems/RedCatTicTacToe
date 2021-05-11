@@ -8,6 +8,7 @@
 import SwiftUI
 import RedCat
 
+// swiftlint:disable identifier_name
 
 struct PlayerDispatchScreen : View {
     
@@ -30,7 +31,7 @@ struct PlayerDispatchScreen : View {
 
 struct AIModifyView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState.AppReducer>
+    @EnvironmentObject var store : CombineStore<AppState>
     @Environment(\.undoManager) var undoManager
     let player : Player
     let ai : RandomAI
@@ -49,7 +50,7 @@ struct AIModifyView : View {
     
     var body: some View {
         HStack {
-        Slider(value: value, in: 0...1000){
+        Slider(value: value, in: 0...1000) {
             Text("Delay")
         }
             Text("\(ai.delayMs)ms")
