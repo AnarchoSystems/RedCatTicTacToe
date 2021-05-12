@@ -54,7 +54,11 @@ struct ContentView: View {
     }
     
     func backToMainMenu() {
-        store.send(Actions.goToMainMenu(store.state))
+        let (maybeResign, gotoMainMenu) = Actions.goToMainMenu(store.state)
+        if let resign = maybeResign {
+            store.send(resign)
+        }
+        store.send(gotoMainMenu)
     }
     
     

@@ -5,21 +5,8 @@
 //  Created by Markus Pfeifer on 06.05.21.
 //
 
+import Foundation
 import RedCat
-
-
-struct RowCol {
-    let row : Int
-    let col : Int
-}
-
-
-protocol PlayerDescriptor {
-    var title : String {get}
-    var description : String {get}
-    // to be called by services -- sideeffects allowed, direct mutation disallowed
-    func makeMove(board: Board, makeMove: @escaping (RowCol) -> Void)
-}
 
 
 class PlayerService : DetailService<AppState, Board?> {
@@ -29,13 +16,34 @@ class PlayerService : DetailService<AppState, Board?> {
                            environment: Dependencies) {
         if
             let board = newValue,
-            let player = board.currentPlayer {
-            store.state.currentPlayer?
-                .makeMove(board: board) {rowCol in
-                    store.send(Actions.MakeMove(player: player,
-                                                row: rowCol.row,
-                                                col: rowCol.col))
-                }
+            let player = board.currentPlayer,
+            let playerDescriptor = store.state.currentPlayer {
+            switch playerDescriptor {
+            case .human:
+                () // handled by UI
+            case .randomAI(let ai):// swiftlint:disable:this identifier_name
+                ai.makeMove(on: board,
+                            player: player,
+                            store: store)
+            }
+        }
+    }
+    
+}
+
+
+fileprivate extension RandomAI {
+    
+    func makeMove(on board: Board, player: Player, store: Store<AppState>) {
+        let possibleMoves = (0..<3).flatMap {row in
+            (0..<3).map {col in (row, col)}
+        }.filter {board[row: $0, col: $1] == nil}
+        if let (row, col) = possibleMoves.randomElement() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMs)) {
+                store.send(Actions.MakeMove(player: player,
+                                            row: row,
+                                            col: col))
+            }
         }
     }
     

@@ -10,21 +10,14 @@ import CasePaths
 
 // swiftlint:disable identifier_name
 
+
+@dynamicMemberLookup
 enum PossiblePlayers : Emptyable {
     
     case human(HumanPlayer)
     case randomAI(RandomAI)
     
     static var empty : PossiblePlayers = .human(HumanPlayer())
-    
-    var title : String {
-        switch self {
-        case .human(let human):
-            return human.title
-        case .randomAI(let ai):
-            return ai.title
-        }
-    }
     
     var player : PlayerDescriptor {
         switch self {
@@ -35,13 +28,8 @@ enum PossiblePlayers : Emptyable {
         }
     }
     
-    var description : String {
-        switch self {
-        case .human(let human):
-            return human.description
-        case .randomAI(let ai):
-            return ai.description
-        }
+    subscript<T>(dynamicMember member: KeyPath<PlayerDescriptor, T>) -> T {
+        player[keyPath: member]
     }
     
     static let reducer = randomAIReducer
@@ -50,4 +38,27 @@ enum PossiblePlayers : Emptyable {
         RandomAI.reducer
     }
     
+}
+
+
+protocol PlayerDescriptor {
+    var title : String {get}
+    var description : String {get}
+    var rawPlayer : RawPlayer {get}
+}
+
+enum RawPlayer : String, Hashable, CaseIterable, Codable {
+    case human
+    case randomAI = "Random AI"
+}
+
+extension PossiblePlayers {
+    init(rawPlayer: RawPlayer) {
+        switch rawPlayer {
+        case .human:
+            self = .human(HumanPlayer())
+        case .randomAI:
+            self = .randomAI(RandomAI())
+        }
+    }
 }

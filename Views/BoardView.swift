@@ -17,9 +17,10 @@ struct BoardView : View {
     var playingState : PlayingState {
         switch store.state {
         case .mainMenu(let board):
-            let aiX = PossiblePlayers.randomAI(RandomAI(player: .x))
-            let aiO = PossiblePlayers.randomAI(RandomAI(player: .o))
-            let players = SelectedPlayers(x: aiX, o: aiO)
+            // swiftlint:disable:next identifier_name
+            let ai = PossiblePlayers(rawPlayer: .randomAI)
+            let players = SelectedPlayers(x: ai,
+                                          o: ai)
             return PlayingState(board: board,
                                 players: players)
         case .hallOfFame, .lobby:

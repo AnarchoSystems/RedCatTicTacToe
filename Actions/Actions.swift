@@ -15,7 +15,7 @@ enum Actions {
         let row : Int
         let col : Int
     }
-
+    
     struct Resign : ActionProtocol {
         let player : Player
     }
@@ -39,24 +39,25 @@ enum Actions {
         fileprivate init() {}
     }
     
-    @ActionBuilder
-    static func goToMainMenu(_ appState: AppState) -> some ActionProtocol {
+    
+    static func goToMainMenu(_ appState: AppState) -> (Resign?, GoToMainMenu) {
         
         if
             case .playing(let state) = appState {
             if case .human = state.players.x {
-                Actions.Resign(player: .x)
+                return (Resign(player: .x), GoToMainMenu())
             }
-            if case .human = state.players.o {
-                Actions.Resign(player: .o)
+            else if case .human = state.players.o {
+                return (Resign(player: .o), GoToMainMenu())
             }
         }
         
-        Actions.GoToMainMenu()
+        return (nil, GoToMainMenu())
+        
         
     }
     
-    struct ChangeDelay : Undoable {
+    struct ChangeDelay : Undoable, ActionForPlayer {
         let player : Player
         var oldValue : Int
         var newValue : Int

@@ -28,7 +28,8 @@ enum AppState : Emptyable {
         Store.combineStore(initialState: .mainMenu(Board()),
                            reducer: reducer,
                            environment: [:],
-                           services: [PlayerService(detail: \.board),
+                           services: [UnrecognizedActionDebugger(trapOnDebug: true),
+                                      PlayerService(detail: \.board),
                                       RecordGameService(),
                                       ResetService(detail: \.board)])
     }
@@ -44,14 +45,14 @@ enum AppState : Emptyable {
         }
     }
     
-    var currentPlayer : PlayerDescriptor? {
+    var currentPlayer : PossiblePlayers? {
         switch self {
-        case .mainMenu(let board):
-            return board.currentPlayer.map {RandomAI(player: $0)}
+        case .mainMenu:
+            return .randomAI(RandomAI())
         case .lobby, .hallOfFame:
             return nil
         case .playing(let state):
-            return state.board.currentPlayer.map {state.players[$0].player}
+            return state.board.currentPlayer.map {state.players[$0]}
         }
     }
     

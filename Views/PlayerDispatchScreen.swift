@@ -66,7 +66,7 @@ struct PlayerDispatchPreview : PreviewProvider {
     
     static var previews: some View {
         AIModifyView(player: .x,
-                     ai: RandomAI(player: .x))
+                     ai: RandomAI())
             .environmentObject(AppState.makeStore())
     }
     

@@ -28,7 +28,6 @@
 		28DDBA4426483B2E0007CDB7 /* PlayerDescriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */; };
 		28DDBA4726483D1E0007CDB7 /* PossiblePlayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */; };
 		28DDBA4C26483E410007CDB7 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4B26483E410007CDB7 /* Actions.swift */; };
-		28DDBA502648429E0007CDB7 /* RawPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */; };
 		28DDBA53264848210007CDB7 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA52264848200007CDB7 /* Statistics.swift */; };
 		28DDBA5626484CCE0007CDB7 /* RecordGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA5526484CCE0007CDB7 /* RecordGameService.swift */; };
 		28DDBA5A264851030007CDB7 /* HallOfFame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DDBA59264851030007CDB7 /* HallOfFame.swift */; };
@@ -58,7 +57,6 @@
 		28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDescriptors.swift; sourceTree = "<group>"; };
 		28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PossiblePlayers.swift; sourceTree = "<group>"; };
 		28DDBA4B26483E410007CDB7 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
-		28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlayer.swift; sourceTree = "<group>"; };
 		28DDBA52264848200007CDB7 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		28DDBA5526484CCE0007CDB7 /* RecordGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordGameService.swift; sourceTree = "<group>"; };
 		28DDBA59264851030007CDB7 /* HallOfFame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFame.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				28DDBA40264839360007CDB7 /* Player.swift */,
 				28DDBA4326483B2E0007CDB7 /* PlayerDescriptors.swift */,
 				28DDBA4626483D1E0007CDB7 /* PossiblePlayers.swift */,
-				28DDBA4F2648429E0007CDB7 /* RawPlayer.swift */,
 				28DDBA52264848200007CDB7 /* Statistics.swift */,
 			);
 			path = ModelsAndReducers;
@@ -262,7 +259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28251B6626456ABF004066FE /* PlayerScreen.swift in Sources */,
-				28DDBA502648429E0007CDB7 /* RawPlayer.swift in Sources */,
 				28DDBA4426483B2E0007CDB7 /* PlayerDescriptors.swift in Sources */,
 				28DDBA3C264837970007CDB7 /* ResetService.swift in Sources */,
 				28251B412644756D004066FE /* PlayerService.swift in Sources */,

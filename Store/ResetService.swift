@@ -21,7 +21,11 @@ class ResetService : DetailService<AppState, Board?> {
         case .tie, .won:
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                 guard case .mainMenu = store.state else {return}
-                store.send(Actions.goToMainMenu(store.state))
+                let (maybeResign, gotoMainMenu) = Actions.goToMainMenu(store.state)
+                if let resign = maybeResign {
+                    store.send(resign)
+                }
+                store.send(gotoMainMenu)
             }
         }
     }

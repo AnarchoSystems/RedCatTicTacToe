@@ -51,8 +51,16 @@ public struct Board : Equatable {
     private var grid = [Player?](repeating: nil, count: 9)
     private(set) var stage : GameStage = .running(currentPlayer: .x)
     var lastSuccessfulMove : Actions.MakeMove?
-    var lastModificationAttempt = Date()
-    var lastModification = Date()
+    var gameIsOver : Bool {
+        switch stage {
+        case .running:
+            return false
+        case .tie:
+            return true
+        case .won:
+            return true
+        }
+    }
     
     var currentPlayer : Player? {
         guard case .running(let currentPlayer) = stage else {
@@ -115,10 +123,6 @@ extension Board {
                 return
             }
             
-            // update attempted modification date
-            let now = Date()
-            state.lastModificationAttempt = now
-            
             // check that field is empty
             
             guard state[row: action.row, col: action.col] == nil else {
@@ -129,7 +133,6 @@ extension Board {
             
             state[row: action.row, col: action.col] = player
             state.lastSuccessfulMove = action
-            state.lastModification = now 
             
             // update game stage
             

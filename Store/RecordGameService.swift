@@ -12,15 +12,20 @@ import Foundation
 
 class RecordGameService : Service<AppState> {
     
-    var lastMove : Date?
+    var gameWasOver = false
     
     override func afterUpdate<Action>(store: Store<AppState>, action: Action, environment: Dependencies) {
         guard
             case .playing(let state) = store.state,
-            state.board.lastModification != lastMove else {
+            state.board.gameIsOver else {
+            gameWasOver = false
             return
         }
-        lastMove = state.board.lastModification
+        guard !gameWasOver else {
+            return
+        }
+        gameWasOver = true
+        
         switch state.board.stage {
         case .running:
             ()

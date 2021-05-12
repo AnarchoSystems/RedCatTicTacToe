@@ -5,7 +5,7 @@
 //  Created by Markus Pfeifer on 09.05.21.
 //
 
-import Foundation
+
 import RedCat
 
 // MARK: Human
@@ -20,7 +20,9 @@ struct HumanPlayer : PlayerDescriptor {
         "This is you!"
     }
     
-    func makeMove(board: Board, makeMove: @escaping (RowCol) -> Void) {}
+    var rawPlayer: RawPlayer {
+        .human
+    }
     
 }
 
@@ -28,11 +30,9 @@ struct HumanPlayer : PlayerDescriptor {
 
 struct RandomAI : PlayerDescriptor {
     
-    let player : Player
     var delayMs : Int
     
-    init(player: Player, delayMs: Int = 200) {
-        self.player = player
+    init(delayMs: Int = 200) {
         self.delayMs = delayMs
     }
     
@@ -44,23 +44,14 @@ struct RandomAI : PlayerDescriptor {
         "An AI that makes random moves with a delay of \(delayMs) milliseconds."
     }
     
-    func makeMove(board: Board, makeMove: @escaping (RowCol) -> Void) {
-        
-        let possibleMoves = (0..<3).flatMap {row in
-            (0..<3).map {col in (row, col)}
-        }.filter {board[row: $0, col: $1] == nil}
-        if let (row, col) = possibleMoves.randomElement() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMs)) {
-                makeMove(RowCol(row: row, col: col))
-            }
-        }
+    var rawPlayer: RawPlayer {
+        .randomAI
     }
     
     static let reducer = delayReducer
     
     static let delayReducer = Reducer {
         (action: Actions.ChangeDelay, state: inout RandomAI) in
-        guard state.player == action.player else {return}
         state.delayMs = action.newValue
     }
     

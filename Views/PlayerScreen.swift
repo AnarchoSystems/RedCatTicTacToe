@@ -40,8 +40,7 @@ struct PlayerScreen : View {
     }
     
     func selectPlayer(_ rawPlayer: RawPlayer, player: Player) {
-        let newValue = PossiblePlayers(rawPlayer: rawPlayer,
-                                       player: player)
+        let newValue = PossiblePlayers(rawPlayer: rawPlayer)
         let action = Actions.SelectPlayer(player: player,
                                           oldValue: selection[player],
                                           newValue: newValue)
