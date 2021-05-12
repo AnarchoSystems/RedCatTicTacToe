@@ -44,7 +44,7 @@ struct PlayerScreen : View {
         let action = Actions.SelectPlayer(player: player,
                                           oldValue: selection[player],
                                           newValue: newValue)
-        store.send(action)
+        store.sendWithUndo(action, undoManager: undoManager)
     }
     
     var binding : Binding<RawPlayer> {
