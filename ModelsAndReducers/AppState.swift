@@ -27,7 +27,7 @@ enum AppState : Emptyable {
     static func makeStore() -> CombineStore<AppState> {
         Store.combineStore(initialState: .mainMenu(Board()),
                            reducer: reducer,
-                           environment: [:],
+                           environment: [Bind(\.debug, to: true)],
                            services: [UnrecognizedActionDebugger(trapOnDebug: true),
                                       PlayerService(detail: \.board),
                                       RecordGameService(),

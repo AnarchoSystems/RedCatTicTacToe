@@ -47,33 +47,47 @@ struct SelectedPlayers {
         }
     }
     
-    struct AIReducer : ErasedReducer {
+    struct AIReducer : DispatchReducer {
         
-        let wrapped = Reducer(/PossiblePlayers.randomAI) {
-            RandomAI.reducer
-        }
+        typealias AspectReducer = Reducer<PrismReducer<PossiblePlayers, RandomAI.AIReducer>>
+        typealias PartReducer = Reducer<LensReducer<SelectedPlayers, AspectReducer>>
+        typealias Result = IfReducer<PartReducer, BothAIReducer>
         
-        func apply<Action : ActionProtocol>(_ action: Action,
-                                            to state: inout SelectedPlayers,
-                                            environment: Dependencies) {
+        func dispatch<Action : ActionProtocol>(_ action: Action) -> Result {
             if let actionForPlayer = action as? ActionForPlayer {
                 switch actionForPlayer.player {
                 case .x:
-                    wrapped.apply(action, to: &state.x, environment: environment)
+                    return .ifReducer(partReducer(for: \.x))
                 case .o:
-                    wrapped.apply(action, to: &state.o, environment: environment)
+                    return .ifReducer(partReducer(for: \.o))
                 }
             }
             else {
-                wrapped.apply(action, to: &state.x, environment: environment)
-                wrapped.apply(action, to: &state.o, environment: environment)
+                return .elseReducer(SelectedPlayers.BothAIReducer())
             }
         }
         
-        func acceptsAction<Action>(ofType type: Action.Type) -> Bool where Action : ActionProtocol {
-            RandomAI.reducer.acceptsAction(ofType: type)
+        func partReducer(for player: WritableKeyPath<SelectedPlayers, PossiblePlayers>) -> PartReducer {
+            Reducer(player) {
+                Reducer(/PossiblePlayers.randomAI) {
+                    RandomAI.AIReducer()
+                }
+            }
         }
         
+    }
+    
+    struct BothAIReducer : ReducerWrapper {
+        
+        let body = Reducer(\SelectedPlayers.x) {
+            Self.aiReducer
+        }.compose(with: Self.aiReducer, property: \SelectedPlayers.o)
+        
+        static var aiReducer : Reducer<PrismReducer<PossiblePlayers, RandomAI.AIReducer>> {
+            Reducer(/PossiblePlayers.randomAI) {
+                RandomAI.AIReducer()
+            }
+        }
         
     }
     
