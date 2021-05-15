@@ -53,21 +53,16 @@ struct SelectedPlayers {
         typealias Result = IfReducer<PartReducer, BothAIReducer>
         
         func dispatch<Action : ActionProtocol>(_ action: Action) -> Result {
-            if let actionForPlayer = action as? ActionForPlayer {
-                switch actionForPlayer.player {
-                case .x:
-                    return .ifReducer(partReducer(for: \.x))
-                case .o:
-                    return .ifReducer(partReducer(for: \.o))
-                }
-            }
-            else {
-                return .elseReducer(SelectedPlayers.BothAIReducer())
-            }
+            
+            (action as? ActionForPlayer)
+                .map(partReducer)
+                .map(IfReducer.ifReducer) ??
+                .elseReducer(BothAIReducer())
+            
         }
         
-        func partReducer(for player: WritableKeyPath<SelectedPlayers, PossiblePlayers>) -> PartReducer {
-            DetailReducer(player) {
+        func partReducer(for action: ActionForPlayer) -> PartReducer {
+            DetailReducer(\SelectedPlayers.[action.player]) {
                 AspectReducer(/PossiblePlayers.randomAI) {
                     RandomAI.AIReducer()
                 }
