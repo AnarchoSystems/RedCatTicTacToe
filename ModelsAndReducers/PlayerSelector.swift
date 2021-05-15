@@ -49,7 +49,7 @@ struct SelectedPlayers {
     
     struct AIReducer : DispatchReducer {
         
-        typealias PartReducer = LensReducer<SelectedPlayers, PrismReducer<PossiblePlayers, RandomAI.AIReducer>>
+        typealias PartReducer = DetailReducer<SelectedPlayers, AspectReducer<PossiblePlayers, RandomAI.AIReducer>>
         typealias Result = IfReducer<PartReducer, BothAIReducer>
         
         func dispatch<Action : ActionProtocol>(_ action: Action) -> Result {
@@ -67,8 +67,8 @@ struct SelectedPlayers {
         }
         
         func partReducer(for player: WritableKeyPath<SelectedPlayers, PossiblePlayers>) -> PartReducer {
-            LensReducer(player) {
-                PrismReducer(/PossiblePlayers.randomAI) {
+            DetailReducer(player) {
+                AspectReducer(/PossiblePlayers.randomAI) {
                     RandomAI.AIReducer()
                 }
             }
@@ -82,7 +82,7 @@ struct SelectedPlayers {
             Self.aiReducer
         }.compose(with: Self.aiReducer, property: \SelectedPlayers.o)
         
-        static var aiReducer : Reducer<PrismReducer<PossiblePlayers, RandomAI.AIReducer>> {
+        static var aiReducer : Reducer<AspectReducer<PossiblePlayers, RandomAI.AIReducer>> {
             Reducer(/PossiblePlayers.randomAI) {
                 RandomAI.AIReducer()
             }
