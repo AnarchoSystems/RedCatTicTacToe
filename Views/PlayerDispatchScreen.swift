@@ -43,16 +43,16 @@ struct AIModifyView : View {
     }
     
     func action(_ newValue: Float) -> some Undoable {
-        Actions.ChangeDelay(player: player,
-                            oldValue: ai.delayMs,
-                            newValue: Int(newValue))
+        Actions.GameConfig.ChangeDelay(player: player,
+                                       oldValue: ai.delayMs,
+                                       newValue: Int(newValue))
     }
     
     var body: some View {
         HStack {
-        Slider(value: value, in: 0...1000) {
-            Text("Delay")
-        }
+            Slider(value: value, in: 0...1000) {
+                Text("Delay")
+            }
             Text("\(ai.delayMs)ms")
         }
         .padding(.horizontal, 15)

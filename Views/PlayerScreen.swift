@@ -41,7 +41,7 @@ struct PlayerScreen : View {
     
     func selectPlayer(_ rawPlayer: RawPlayer, player: Player) {
         let newValue = PossiblePlayers(rawPlayer: rawPlayer)
-        let action = Actions.SelectPlayer(player: player,
+        let action = Actions.GameConfig.SelectPlayer(player: player,
                                           oldValue: selection[player],
                                           newValue: newValue)
         store.sendWithUndo(action, undoManager: undoManager)

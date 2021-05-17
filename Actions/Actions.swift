@@ -8,78 +8,95 @@
 import RedCat
 
 
-enum Actions {
+extension Actions {
     
-    struct MakeMove : ActionProtocol, Equatable {
-        let player : Player
-        let row : Int
-        let col : Int
-    }
-    
-    struct Resign : ActionProtocol {
-        let player : Player
-    }
-    
-    struct SelectPlayer : Undoable {
-        let player : Player
-        var oldValue : PossiblePlayers
-        var newValue : PossiblePlayers
-        mutating func invert() {
-            (oldValue, newValue) = (newValue, oldValue)
-        }
-    }
-    
-    struct SetUpGame : ActionProtocol {}
-    
-    struct StartGame : ActionProtocol {
-        let selection : SelectedPlayers
-    }
-    
-    struct GoToMainMenu : ActionProtocol {
-        fileprivate init() {}
-    }
-    
-    
-    static func goToMainMenu(_ appState: AppState) -> (Resign?, GoToMainMenu) {
+    enum Board {
         
-        if
-            case .playing(let state) = appState {
-            if case .human = state.players.x {
-                return (Resign(player: .x), GoToMainMenu())
+        struct MakeMove : ActionProtocol, Equatable {
+            let player : Player
+            let row : Int
+            let col : Int
+        }
+        
+        struct Resign : ActionProtocol {
+            let player : Player
+        }
+        
+    }
+    
+    
+    enum Menu {
+        
+        struct SetUpGame : ActionProtocol {}
+        
+        struct GoToHallOfFame : ActionProtocol {}
+        
+        struct GoToMainMenu : ActionProtocol {
+            fileprivate init() {}
+        }
+        
+        
+        static func goToMainMenu(_ appState: AppState) -> (Board.Resign?, GoToMainMenu) {
+            
+            if
+                case .playing(let state) = appState {
+                if case .human = state.players.x {
+                    return (Board.Resign(player: .x), GoToMainMenu())
+                }
+                else if case .human = state.players.o {
+                    return (Board.Resign(player: .o), GoToMainMenu())
+                }
             }
-            else if case .human = state.players.o {
-                return (Resign(player: .o), GoToMainMenu())
+            
+            return (nil, GoToMainMenu())
+            
+            
+        }
+        
+    }
+    
+    enum GameConfig {
+        
+        struct StartGame : ActionProtocol {
+            let selection : SelectedPlayers
+        }
+        
+        struct SelectPlayer : Undoable {
+            let player : Player
+            var oldValue : PossiblePlayers
+            var newValue : PossiblePlayers
+            mutating func invert() {
+                (oldValue, newValue) = (newValue, oldValue)
             }
         }
         
-        return (nil, GoToMainMenu())
-        
-        
-    }
-    
-    struct ChangeDelay : Undoable, ActionForPlayer {
-        let player : Player
-        var oldValue : Int
-        var newValue : Int
-        mutating func invert() {
-            (oldValue, newValue) = (newValue, oldValue)
+        struct ChangeDelay : Undoable, ActionForPlayer {
+            let player : Player
+            var oldValue : Int
+            var newValue : Int
+            mutating func invert() {
+                (oldValue, newValue) = (newValue, oldValue)
+            }
         }
-    }
-    
-    struct RecordWin : ActionProtocol {
-        
-        let winner : GameStatsKey
-        let loser : GameStatsKey
         
     }
     
-    struct RecordTie : ActionProtocol {
+    enum Stats {
         
-        let player1 : GameStatsKey
-        let player2 : GameStatsKey
+        struct RecordWin : ActionProtocol {
+            
+            let winner : GameStatsKey
+            let loser : GameStatsKey
+            
+        }
+        
+        struct RecordTie : ActionProtocol {
+            
+            let player1 : GameStatsKey
+            let player2 : GameStatsKey
+            
+        }
         
     }
-    
-    struct GoToHallOfFame : ActionProtocol {}
     
 }

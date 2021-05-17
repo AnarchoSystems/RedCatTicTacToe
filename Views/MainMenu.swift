@@ -12,6 +12,7 @@ import RedCat
 struct MainMenu : View {
     
     @EnvironmentObject var store : CombineStore<AppState>
+    typealias Actions = RedCat.Actions.Menu
     
     var body: some View {
         

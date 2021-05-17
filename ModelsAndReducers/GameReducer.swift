@@ -48,6 +48,8 @@ enum VictoryWitness : CaseIterable, Equatable {
 
 public struct Board : Equatable {
     
+    typealias Actions = RedCat.Actions.Board
+    
     private var grid = [Player?](repeating: nil, count: 9)
     private(set) var stage : GameStage = .running(currentPlayer: .x)
     var lastSuccessfulMove : Actions.MakeMove?

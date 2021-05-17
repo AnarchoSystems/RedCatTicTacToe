@@ -66,7 +66,7 @@ struct SetUpScreen : View {
     }
     
     func start(with selection: SelectedPlayers) {
-        store.send(Actions.StartGame(selection: selection))
+        store.send(Actions.GameConfig.StartGame(selection: selection))
     }
     
 }

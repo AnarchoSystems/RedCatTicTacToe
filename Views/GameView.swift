@@ -47,7 +47,7 @@ struct GameView : View {
         HStack {
             Text(stateText(stage))
             Button("Restart") {
-                store.send(Actions.StartGame(selection: players))
+                store.send(Actions.GameConfig.StartGame(selection: players))
             }
         }
     }

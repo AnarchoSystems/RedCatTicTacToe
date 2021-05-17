@@ -40,7 +40,7 @@ fileprivate extension RandomAI {
         }.filter {board[row: $0, col: $1] == nil}
         if let (row, col) = possibleMoves.randomElement() {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMs)) {
-                store.send(Actions.MakeMove(player: player,
+                store.send(Actions.Board.MakeMove(player: player,
                                             row: row,
                                             col: col))
             }

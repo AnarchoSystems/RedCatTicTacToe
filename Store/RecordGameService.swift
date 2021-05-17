@@ -30,15 +30,15 @@ class RecordGameService : Service<AppState> {
         case .running:
             ()
         case .tie:
-            store.send(Actions.RecordTie(player1: GameStatsKey(player: .x,
-                                                               rawPlayer: state.players.x.rawPlayer),
-                                         player2: GameStatsKey(player: .o,
-                                                               rawPlayer: state.players.o.rawPlayer)))
+            store.send(Actions.Stats.RecordTie(player1: GameStatsKey(player: .x,
+                                                                     rawPlayer: state.players.x.rawPlayer),
+                                               player2: GameStatsKey(player: .o,
+                                                                     rawPlayer: state.players.o.rawPlayer)))
         case .won(let winner, _):
-            store.send(Actions.RecordWin(winner: GameStatsKey(player: winner,
-                                                              rawPlayer: state.players[winner].rawPlayer),
-                                         loser: GameStatsKey(player: winner.other,
-                                                             rawPlayer: state.players[winner.other].rawPlayer)))
+            store.send(Actions.Stats.RecordWin(winner: GameStatsKey(player: winner,
+                                                                    rawPlayer: state.players[winner].rawPlayer),
+                                               loser: GameStatsKey(player: winner.other,
+                                                                   rawPlayer: state.players[winner.other].rawPlayer)))
         }
     }
     

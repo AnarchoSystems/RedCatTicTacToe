@@ -12,6 +12,8 @@ import Foundation
 
 struct SelectedPlayers {
     
+    typealias Actions = RedCat.Actions.GameConfig
+    
     // swiftlint:disable identifier_name
     var x : PossiblePlayers = .human(HumanPlayer())
     var o : PossiblePlayers = .randomAI(RandomAI())

@@ -86,7 +86,7 @@ struct BoardView : View {
             if case .human = playingState.players[player],
                board.currentPlayer == player {
                 
-                store.send(Actions.MakeMove(player: player,
+                store.send(Actions.Board.MakeMove(player: player,
                                             row: row,
                                             col: col))
                 

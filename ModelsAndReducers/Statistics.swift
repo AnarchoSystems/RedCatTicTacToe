@@ -41,7 +41,7 @@ extension AppState {
         get {
             UserDefaults.standard.data(forKey: statsKey.string)
                 .flatMap {try? JSONDecoder().decode(GameStats.self, from: $0)}
-            ?? GameStats(key: statsKey)
+                ?? GameStats(key: statsKey)
         }
         set {
             // swiftlint:disable:next force_try
@@ -57,13 +57,13 @@ extension AppState {
     }
     
     fileprivate static let recordWinReducer = Reducer {
-        (action: Actions.RecordWin, state: inout AppState) in
+        (action: Actions.Stats.RecordWin, state: inout AppState) in
         state[gameStatsFor: action.winner].wins[action.loser].modify(default: 1, inc)
         state[gameStatsFor: action.loser].losses[action.winner].modify(default: 1, inc)
     }
     
     fileprivate static let recordTieReducer = Reducer {
-        (action: Actions.RecordTie, state: inout AppState) in
+        (action: Actions.Stats.RecordTie, state: inout AppState) in
         state[gameStatsFor: action.player1].ties[action.player2].modify(default: 1, inc)
         state[gameStatsFor: action.player2].ties[action.player1].modify(default: 1, inc)
     }

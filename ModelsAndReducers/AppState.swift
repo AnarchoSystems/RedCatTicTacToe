@@ -76,7 +76,7 @@ enum AppState : Emptyable {
     }
     
     static let goToHallOfFameReducer = Reducer {
-        (_: Actions.GoToHallOfFame, state: inout AppState) in
+        (_: Actions.Menu.GoToHallOfFame, state: inout AppState) in
         state = .hallOfFame
     }
     
@@ -85,12 +85,12 @@ enum AppState : Emptyable {
     }
     
     static let setUpReducer = Reducer {
-        (_: Actions.SetUpGame, state: inout AppState) in
+        (_: Actions.Menu.SetUpGame, state: inout AppState) in
         state = .lobby(SelectedPlayers())
     }
     
     static let startGameReducer = Reducer {
-        (action: Actions.StartGame, state: inout AppState) in
+        (action: Actions.GameConfig.StartGame, state: inout AppState) in
         state = .playing(PlayingState(board: Board(), players: action.selection))
     }
     
@@ -101,7 +101,7 @@ enum AppState : Emptyable {
     }
     
     static let gotoMainMenuReducer = Reducer {
-        (_: Actions.GoToMainMenu, state: inout AppState) in
+        (_: Actions.Menu.GoToMainMenu, state: inout AppState) in
         state = .mainMenu(Board())
     }
     
