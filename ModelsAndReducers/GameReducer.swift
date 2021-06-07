@@ -46,7 +46,7 @@ enum VictoryWitness : CaseIterable, Equatable {
 }
 
 
-public struct Board : Equatable {
+struct Board : Equatable {
     
     typealias Actions = RedCat.Actions.Board
     

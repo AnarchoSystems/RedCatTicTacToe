@@ -27,7 +27,7 @@ enum AppState : Emptyable {
     static func makeStore() -> CombineStore<AppState> {
         Store.combineStore(initialState: .mainMenu(Board()),
                            reducer: reducer,
-                           environment: [Bind(\.debug, to: true)],
+                           environment: [],
                            services: [UnrecognizedActionDebugger(trapOnDebug: true),
                                       PlayerService(detail: \.board),
                                       RecordGameService(),
@@ -61,7 +61,8 @@ enum AppState : Emptyable {
     
     struct AppReducer : ReducerWrapper {
         
-        let body = Reducer {
+        @usableFromInline
+        let body = AnyReducer(
             gotoMainMenuReducer
                 .compose(with: playingReducer)
                 .compose(with: SelectedPlayers.reducer, aspect: /AppState.lobby)
@@ -70,8 +71,7 @@ enum AppState : Emptyable {
                 .compose(with: setUpReducer)
                 .compose(with: mainMenuBackgroundBoardReducer)
                 .compose(with: recordGameResultReducer)
-                .handlingLists()
-        }
+        )
         
     }
     
