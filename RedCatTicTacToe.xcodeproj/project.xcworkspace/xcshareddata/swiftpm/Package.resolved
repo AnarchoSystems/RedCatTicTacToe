@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "RedCat",
-        "repositoryURL": "/Users/markus/Documents/swift/Untracked/framework/RedCat",
+        "repositoryURL": "https://github.com/AnarchoSystems/RedCat",
         "state": {
           "branch": "main",
           "revision": "854c2f1dd56b72605e986474a26fbf394bef69f4",

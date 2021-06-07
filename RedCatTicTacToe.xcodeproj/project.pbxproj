@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2812DE75266D519900F476AF /* RedCatTicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812DE74266D519900F476AF /* RedCatTicTacToeTests.swift */; };
-		2812DE86266D6C6700F476AF /* RedCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2812DE85266D6C6700F476AF /* RedCat */; };
+		2812DE89266D9DB700F476AF /* RedCat in Frameworks */ = {isa = PBXBuildFile; productRef = 2812DE88266D9DB700F476AF /* RedCat */; };
 		28251B2926446BF6004066FE /* RedCatTicTacToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B2826446BF6004066FE /* RedCatTicTacToeApp.swift */; };
 		28251B2B26446BF6004066FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28251B2A26446BF6004066FE /* ContentView.swift */; };
 		28251B2D26446BF9004066FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28251B2C26446BF9004066FE /* Assets.xcassets */; };
@@ -88,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2812DE86266D6C6700F476AF /* RedCat in Frameworks */,
+				2812DE89266D9DB700F476AF /* RedCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +230,7 @@
 			);
 			name = RedCatTicTacToe;
 			packageProductDependencies = (
-				2812DE85266D6C6700F476AF /* RedCat */,
+				2812DE88266D9DB700F476AF /* RedCat */,
 			);
 			productName = RedCatTicTacToe;
 			productReference = 28251B2526446BF6004066FE /* RedCatTicTacToe.app */;
@@ -264,7 +264,7 @@
 			);
 			mainGroup = 28251B1C26446BF6004066FE;
 			packageReferences = (
-				2812DE84266D6C6700F476AF /* XCRemoteSwiftPackageReference "RedCat" */,
+				2812DE87266D9DB700F476AF /* XCRemoteSwiftPackageReference "RedCat" */,
 			);
 			productRefGroup = 28251B2626446BF6004066FE /* Products */;
 			projectDirPath = "";
@@ -605,9 +605,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		2812DE84266D6C6700F476AF /* XCRemoteSwiftPackageReference "RedCat" */ = {
+		2812DE87266D9DB700F476AF /* XCRemoteSwiftPackageReference "RedCat" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "file:///Users/markus/Documents/swift/Untracked/framework/RedCat";
+			repositoryURL = "https://github.com/AnarchoSystems/RedCat";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -616,9 +616,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2812DE85266D6C6700F476AF /* RedCat */ = {
+		2812DE88266D9DB700F476AF /* RedCat */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2812DE84266D6C6700F476AF /* XCRemoteSwiftPackageReference "RedCat" */;
+			package = 2812DE87266D9DB700F476AF /* XCRemoteSwiftPackageReference "RedCat" */;
 			productName = RedCat;
 		};
 /* End XCSwiftPackageProductDependency section */
