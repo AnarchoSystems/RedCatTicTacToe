@@ -111,7 +111,6 @@ extension Board {
     
     struct MoveReducer : ReducerProtocol {
        
-        typealias Action = Actions.MakeMove
         typealias State = Board
         
         func apply(_ action: Actions.MakeMove, to state: inout Board) {
