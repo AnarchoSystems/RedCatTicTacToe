@@ -9,10 +9,14 @@ import Foundation
 import RedCat
 
 
-class PlayerService : DetailService<AppState, Board?> {
+class PlayerService : DetailService<AppState, Board?, AppAction> {
+    
+    override func onAppInit(store: Store<AppState, AppAction>, environment: Dependencies) {
+        store.send(AppAction.goToMainMenu(store.state))
+    }
     
     override func onUpdate(newValue: Board?,
-                           store: Store<AppState>,
+                           store: Store<AppState, AppAction>,
                            environment: Dependencies) {
         if
             let board = newValue,
@@ -34,15 +38,15 @@ class PlayerService : DetailService<AppState, Board?> {
 
 fileprivate extension RandomAI {
     
-    func makeMove(on board: Board, player: Player, store: Store<AppState>) {
+    func makeMove(on board: Board, player: Player, store: Store<AppState, AppAction>) {
         let possibleMoves = (0..<3).flatMap {row in
             (0..<3).map {col in (row, col)}
         }.filter {board[row: $0, col: $1] == nil}
         if let (row, col) = possibleMoves.randomElement() {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMs)) {
-                store.send(Actions.Board.MakeMove(player: player,
-                                            row: row,
-                                            col: col))
+                store.send(AppAction.board(action: .makeMove(player: player,
+                                                             row: row,
+                                                             col: col)))
             }
         }
     }

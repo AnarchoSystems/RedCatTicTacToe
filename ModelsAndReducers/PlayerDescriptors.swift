@@ -48,15 +48,4 @@ struct RandomAI : PlayerDescriptor {
         .randomAI
     }
     
-    static let reducer = AIReducer()
-    
-    struct AIReducer : ReducerWrapper {
-        let body = delayReducer
-    }
-    
-    static let delayReducer = Reducer {
-        (action: Actions.GameConfig.ChangeDelay, state: inout RandomAI) in
-        state.delayMs = action.newValue
-    }
-    
 }

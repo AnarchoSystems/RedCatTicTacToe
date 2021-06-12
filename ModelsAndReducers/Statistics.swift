@@ -52,20 +52,20 @@ extension AppState {
     
     // MARK: Reducers
     
-    static let recordGameResultReducer = Reducer {
-        recordWinReducer.compose(with: recordTieReducer)
-    }
-    
-    fileprivate static let recordWinReducer = Reducer {
-        (action: Actions.Stats.RecordWin, state: inout AppState) in
-        state[gameStatsFor: action.winner].wins[action.loser].modify(default: 1, inc)
-        state[gameStatsFor: action.loser].losses[action.winner].modify(default: 1, inc)
-    }
-    
-    fileprivate static let recordTieReducer = Reducer {
-        (action: Actions.Stats.RecordTie, state: inout AppState) in
-        state[gameStatsFor: action.player1].ties[action.player2].modify(default: 1, inc)
-        state[gameStatsFor: action.player2].ties[action.player1].modify(default: 1, inc)
+    struct StatsReducer : ReducerProtocol {
+        
+        func apply(_ action: AppAction.Stats,
+                   to state: inout AppState) {
+            switch action {
+            case .recordWin(winner: let winner, loser: let loser):
+                state[gameStatsFor: winner].wins[loser].modify(default: 1, inc)
+                state[gameStatsFor: loser].losses[winner].modify(default: 1, inc)
+            case .recordTie(player1: let player1, player2: let player2):
+                state[gameStatsFor: player1].ties[player2].modify(default: 1, inc)
+                state[gameStatsFor: player2].ties[player1].modify(default: 1, inc)
+            }
+        }
+        
     }
     
 }

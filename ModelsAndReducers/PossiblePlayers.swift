@@ -32,12 +32,6 @@ enum PossiblePlayers : Emptyable {
         player[keyPath: member]
     }
     
-    static let reducer = randomAIReducer
-    
-    static let randomAIReducer = Reducer(/PossiblePlayers.randomAI) {
-        RandomAI.reducer
-    }
-    
 }
 
 

@@ -31,7 +31,7 @@ struct PlayerDispatchScreen : View {
 
 struct AIModifyView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     @Environment(\.undoManager) var undoManager
     let player : Player
     let ai : RandomAI
@@ -39,13 +39,14 @@ struct AIModifyView : View {
     var value : Binding<Float> {
         Binding(get: {Float(ai.delayMs)},
                 set: {store.sendWithUndo(action($0),
+                                         embed: {AppAction.gameConfig(action: .configure(action: $0))},
                                          undoManager: undoManager)})
     }
     
-    func action(_ newValue: Float) -> some Undoable {
-        Actions.GameConfig.ChangeDelay(player: player,
-                                       oldValue: ai.delayMs,
-                                       newValue: Int(newValue))
+    func action(_ newValue: Float) -> AppAction.GameConfig.ConfigAction {
+        .changeAIDelay(player: player,
+                       oldValue: ai.delayMs,
+                       newValue: Int(newValue))
     }
     
     var body: some View {

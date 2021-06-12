@@ -12,7 +12,7 @@ import RedCat
 
 struct BoardView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     
     var playingState : PlayingState {
         switch store.state {
@@ -86,9 +86,9 @@ struct BoardView : View {
             if case .human = playingState.players[player],
                board.currentPlayer == player {
                 
-                store.send(Actions.Board.MakeMove(player: player,
-                                            row: row,
-                                            col: col))
+                store.send(AppAction.board(action: .makeMove(player: player,
+                                                             row: row,
+                                                             col: col)))
                 
             }
         }

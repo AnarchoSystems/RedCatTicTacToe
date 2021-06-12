@@ -12,7 +12,7 @@ import RedCat
 
 struct GameView : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     
     func viewState(_ appState: AppState) -> PlayingState {
         guard case .playing(let state) = appState else {
@@ -24,7 +24,8 @@ struct GameView : View {
     
     var body : some View {
         
-        store.withViewStore(viewState) {store in
+        store.withViewStore(onAction: AppAction.board,
+                            viewState) {store in
             GeometryReader {geo in
                 VStack(spacing: 0) {
                     stats(stage: store.state.board.stage,
@@ -47,7 +48,7 @@ struct GameView : View {
         HStack {
             Text(stateText(stage))
             Button("Restart") {
-                store.send(Actions.GameConfig.StartGame(selection: players))
+                store.send(.gameConfig(action: .start(selection: players)))
             }
         }
     }

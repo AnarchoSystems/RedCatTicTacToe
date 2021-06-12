@@ -12,8 +12,6 @@ import Foundation
 
 struct SelectedPlayers {
     
-    typealias Actions = RedCat.Actions.GameConfig
-    
     // swiftlint:disable identifier_name
     var x : PossiblePlayers = .human(HumanPlayer())
     var o : PossiblePlayers = .randomAI(RandomAI())
@@ -38,50 +36,19 @@ struct SelectedPlayers {
         }
     }
     
-    static let reducer = selectPlayerReducer
-        .compose(with: AIReducer())
+    static let reducer = SelectedPlayersReducer()
     
-    
-    static let selectPlayerReducer = Reducer {
-        Reducer {
-            (action: Actions.SelectPlayer, state: inout SelectedPlayers) in
-            state[action.player] = action.newValue
-        }
-    }
-    
-    struct AIReducer : DispatchReducer {
+    struct SelectedPlayersReducer : ReducerProtocol {
         
-        typealias PartReducer = DetailReducer<SelectedPlayers, AspectReducer<PossiblePlayers, RandomAI.AIReducer>>
-        typealias Result = IfReducer<PartReducer, BothAIReducer>
-        
-        func dispatch<Action : ActionProtocol>(_ action: Action) -> Result {
-            
-            (action as? ActionForPlayer)
-                .map(partReducer)
-                .map(IfReducer.ifReducer) ??
-                .elseReducer(BothAIReducer())
-            
-        }
-        
-        func partReducer(for action: ActionForPlayer) -> PartReducer {
-            DetailReducer(\SelectedPlayers.[action.player]) {
-                AspectReducer(/PossiblePlayers.randomAI) {
-                    RandomAI.AIReducer()
+        func apply(_ action: AppAction.GameConfig.ConfigAction,
+                   to state: inout SelectedPlayers) {
+            switch action {
+            case .selectPlayer(player: let player, oldValue: _, newValue: let newValue):
+                state[player] = newValue
+            case .changeAIDelay(player: let player, oldValue: _, newValue: let newValue):
+                (/PossiblePlayers.randomAI).mutate(&state[player]) {randomAI in
+                    randomAI.delayMs = newValue
                 }
-            }
-        }
-        
-    }
-    
-    struct BothAIReducer : ReducerWrapper {
-        
-        let body = Reducer(\SelectedPlayers.x) {
-            Self.aiReducer
-        }.compose(with: Self.aiReducer, property: \SelectedPlayers.o)
-        
-        static var aiReducer : Reducer<AspectReducer<PossiblePlayers, RandomAI.AIReducer>> {
-            Reducer(/PossiblePlayers.randomAI) {
-                RandomAI.AIReducer()
             }
         }
         

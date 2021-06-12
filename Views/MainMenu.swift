@@ -11,18 +11,17 @@ import RedCat
 
 struct MainMenu : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
-    typealias Actions = RedCat.Actions.Menu
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     
     var body: some View {
         
         VStack {
             
             Button("Start Game") {
-                store.send(Actions.SetUpGame())
+                store.send(AppAction.menu(action: .setUp))
             }
             Button("Hall of Fame") {
-                store.send(Actions.GoToHallOfFame())
+                store.send(AppAction.menu(action: .goToHallOfFame))
             }
             Button("Leave") {
                 exit(EXIT_SUCCESS)

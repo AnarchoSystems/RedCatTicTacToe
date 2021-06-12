@@ -24,25 +24,24 @@ enum AppState : Emptyable {
     
     static let empty : AppState = .mainMenu(Board())
     
-    static func makeStore() -> CombineStore<AppState> {
+    static func makeStore() -> CombineStore<AppState, AppAction> {
         Store.combineStore(initialState: .mainMenu(Board()),
                            reducer: reducer,
                            environment: [],
-                           services: [UnrecognizedActionDebugger(trapOnDebug: true),
-                                      PlayerService(detail: \.board),
+                           services: [PlayerService(detail: \.board),
                                       RecordGameService(),
                                       ResetService(detail: \.board)])
     }
     
     var board : Board? {
-        switch self {
-        case .mainMenu(let board):
-            return board
-        case .lobby, .hallOfFame:
-            return nil
-        case .playing(let state):
-            return state.board
-        }
+            switch self {
+            case .mainMenu(let board):
+                return board
+            case .lobby, .hallOfFame:
+                return nil
+            case .playing(let state):
+                return state.board
+            }
     }
     
     var currentPlayer : PossiblePlayers? {
@@ -59,50 +58,64 @@ enum AppState : Emptyable {
     
     static let reducer = AppReducer()
     
-    struct AppReducer : ReducerWrapper {
+    struct AppReducer : DispatchReducerProtocol {
         
-        @usableFromInline
-        let body = AnyReducer(
-            gotoMainMenuReducer
-                .compose(with: playingReducer)
-                .compose(with: SelectedPlayers.reducer, aspect: /AppState.lobby)
-                .compose(with: goToHallOfFameReducer)
-                .compose(with: startGameReducer)
-                .compose(with: setUpReducer)
-                .compose(with: mainMenuBackgroundBoardReducer)
-                .compose(with: recordGameResultReducer)
-        )
+        func dispatch(_ action: AppAction) -> VoidReducer<AppState> {
+            switch action {
+            case .board(action: let action):
+                return Board.reducer.bind(to: \.board).bind(to: /AppState.playing)
+                    .compose(with: Board.reducer.bind(to: /AppState.mainMenu))
+                    .send(action)
+            case .menu(action: let action):
+                return MenuReducer().send(action)
+            case .gameConfig(action: let action):
+                switch action {
+                case .configure(action: let action):
+                    return SelectedPlayers.reducer.bind(to: /AppState.lobby).send(action)
+                case .start(selection: let selection):
+                    return startGameReducer.send(selection)
+                }
+            case .stats(action: let action):
+                return StatsReducer().send(action)
+            }
+        }
+        
+        /*
+         @usableFromInline
+         let body = AnyReducer(
+         gotoMainMenuReducer
+         .compose(with: playingReducer)
+         .compose(with: SelectedPlayers.reducer, aspect: /AppState.lobby)
+         .compose(with: goToHallOfFameReducer)
+         .compose(with: startGameReducer)
+         .compose(with: setUpReducer)
+         .compose(with: mainMenuBackgroundBoardReducer)
+         .compose(with: recordGameResultReducer)
+         )
+         */
         
     }
     
-    static let goToHallOfFameReducer = Reducer {
-        (_: Actions.Menu.GoToHallOfFame, state: inout AppState) in
-        state = .hallOfFame
-    }
     
-    static let mainMenuBackgroundBoardReducer = Reducer(/AppState.mainMenu) {
-        Board.reducer
-    }
-    
-    static let setUpReducer = Reducer {
-        (_: Actions.Menu.SetUpGame, state: inout AppState) in
-        state = .lobby(SelectedPlayers())
+    struct MenuReducer : ReducerProtocol {
+        
+        func apply(_ action: AppAction.Menu,
+                   to state: inout AppState) {
+            switch action {
+            case .setUp:
+                state = .lobby(SelectedPlayers())
+            case .goToHallOfFame:
+                state = .hallOfFame
+            case .main:
+                state = .mainMenu(Board())
+            }
+        }
+        
     }
     
     static let startGameReducer = Reducer {
-        (action: Actions.GameConfig.StartGame, state: inout AppState) in
-        state = .playing(PlayingState(board: Board(), players: action.selection))
-    }
-    
-    static let playingReducer = Reducer(/AppState.playing) {
-        Reducer(\.board) {
-            Board.reducer
-        }
-    }
-    
-    static let gotoMainMenuReducer = Reducer {
-        (_: Actions.Menu.GoToMainMenu, state: inout AppState) in
-        state = .mainMenu(Board())
+        (action: SelectedPlayers, state: inout AppState) in
+        state = .playing(PlayingState(board: Board(), players: action))
     }
     
 }

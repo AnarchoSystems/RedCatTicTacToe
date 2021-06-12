@@ -13,7 +13,7 @@ import RedCat
 struct PlayerScreen : View {
     
     let player : Player
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     let selection : SelectedPlayers
     @Environment(\.undoManager) var undoManager
     
@@ -41,10 +41,14 @@ struct PlayerScreen : View {
     
     func selectPlayer(_ rawPlayer: RawPlayer, player: Player) {
         let newValue = PossiblePlayers(rawPlayer: rawPlayer)
-        let action = Actions.GameConfig.SelectPlayer(player: player,
-                                          oldValue: selection[player],
-                                          newValue: newValue)
-        store.sendWithUndo(action, undoManager: undoManager)
+        let action = AppAction.GameConfig.ConfigAction.selectPlayer(player: player,
+                                                                    oldValue: selection[player],
+                                                                    newValue: newValue)
+        store.sendWithUndo(action,
+                           embed: {AppAction
+                            .gameConfig(action: .configure(action: $0))
+                           },
+                           undoManager: undoManager)
     }
     
     var binding : Binding<RawPlayer> {

@@ -11,7 +11,7 @@ import RedCat
 
 struct HallOfFame : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     
     var body : some View {
         GeometryReader {geo in

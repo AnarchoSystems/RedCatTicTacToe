@@ -48,11 +48,9 @@ enum VictoryWitness : CaseIterable, Equatable {
 
 struct Board : Equatable {
     
-    typealias Actions = RedCat.Actions.Board
-    
     private var grid = [Player?](repeating: nil, count: 9)
     private(set) var stage : GameStage = .running(currentPlayer: .x)
-    var lastSuccessfulMove : Actions.MakeMove?
+    var lastSuccessfulMove : Move?
     var gameIsOver : Bool {
         switch stage {
         case .running:
@@ -80,6 +78,11 @@ struct Board : Equatable {
         }
     }
     
+    struct Move : Equatable {
+        let row : Int
+        let col : Int
+    }
+    
 }
 
 // MARK: REDUCER
@@ -88,64 +91,67 @@ extension Board {
     
     static let reducer = BoardReducer()
     
-    struct BoardReducer : ReducerWrapper {
+    struct BoardReducer : ReducerProtocol {
         
-        let body =  MoveReducer()
-            .compose(with: resignReducer)
         
-    }
-    
-    static let resignReducer = Reducer {
-        (action: Actions.Resign, state: inout Board) in
+        func apply(_ action: AppAction.Board,
+                   to state: inout Board) {
+            
+            switch action {
+            case .makeMove(player: let player, row: let row, col: let col):
+                makeMove(player: player, row: row, col: col, board: &state)
+            case .resign(player: let player):
+                resign(player: player, from: &state)
+            }
+            
+        }
+        
+        func resign(player: Player, from board: inout Board) {
             
             guard
-                case .running = state.stage else {
+                case .running = board.stage else {
                 return
             }
             
-        state.stage = .won(winner: action.player.other,
+        board.stage = .won(winner: player.other,
                                witness: .otherPlayerHasWithdrawn)
             
+        }
         
-    }
-    
-    struct MoveReducer : ReducerProtocol {
-       
-        typealias State = Board
-        
-        func apply(_ action: Actions.MakeMove, to state: inout Board) {
-            
+        func makeMove(player: Player, row: Int, col: Int, board: inout Board) {
             // check that the came is running
             // and that the move is made by the right player
             
             guard
-                case .running(let player) = state.stage,
-                player == action.player else {
+                case .running(let player) = board.stage,
+                player == player else {
                 return
             }
             
             // check that field is empty
             
-            guard state[row: action.row, col: action.col] == nil else {
+            guard board[row: row, col: col] == nil else {
                 return
             }
             
             // claim field and update last successful move
             
-            state[row: action.row, col: action.col] = player
-            state.lastSuccessfulMove = action
+            board[row: row, col: col] = player
+            board.lastSuccessfulMove = Move(row: row, col: col)
             
             // update game stage
             
-            state.stage = endWithWinner(state) ??
-                endWithTie(state) ??
+            board.stage = endWithWinner(board) ??
+                endWithTie(board) ??
                 .running(currentPlayer: player.other)
-            
         }
+        
+        
         
         func endWithTie(_ game: Board) -> GameStage? {
             !game.grid.contains(nil) ? .tie : nil
         }
+        
         
         func endWithWinner(_ game: Board) -> GameStage? {
             for witness in VictoryWitness.allCases {

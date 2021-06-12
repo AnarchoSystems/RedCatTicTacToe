@@ -12,7 +12,7 @@ import RedCat
 
 struct SetUpScreen : View {
     
-    @EnvironmentObject var store : CombineStore<AppState>
+    @EnvironmentObject var store : CombineStore<AppState, AppAction>
     
     func viewState(_ appState: AppState) -> SelectedPlayers {
         guard case .lobby(let players) = appState else {
@@ -23,7 +23,8 @@ struct SetUpScreen : View {
     
     var body: some View {
         
-        store.withViewStore(viewState) {store in
+        store.withViewStore(onAction: AppAction.gameConfig,
+                            viewState) {store in
             
             GeometryReader {geo in
                 VStack(spacing: 0) {
@@ -66,7 +67,7 @@ struct SetUpScreen : View {
     }
     
     func start(with selection: SelectedPlayers) {
-        store.send(Actions.GameConfig.StartGame(selection: selection))
+        store.send(AppAction.gameConfig(action: .start(selection: selection)))
     }
     
 }

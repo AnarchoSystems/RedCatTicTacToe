@@ -8,94 +8,76 @@
 import RedCat
 
 
-extension Actions {
+enum AppAction {
     
+    case board(action: Board)
+    case menu(action: Menu)
+    case gameConfig(action: GameConfig)
+    case stats(action: Stats)
+    
+    static func goToMainMenu(_ appState: AppState) -> ActionGroup<AppAction> {
+        
+        if
+            case .playing(let state) = appState {
+            if case .human = state.players.x {
+                return [.board(action: .resign(player: .x)), .menu(action: .main)]
+            }
+            else if case .human = state.players.o {
+                return [.board(action: .resign(player: .o)), .menu(action: .main)]
+            }
+        }
+        
+        return [.menu(action: .main)]
+        
+    }
+    
+}
+
+extension AppAction {
+
     enum Board {
         
-        struct MakeMove : ActionProtocol, Equatable {
-            let player : Player
-            let row : Int
-            let col : Int
-        }
-        
-        struct Resign : ActionProtocol {
-            let player : Player
-        }
+        case makeMove(player: Player, row: Int, col: Int)
+        case resign(player: Player)
         
     }
     
     
-    enum Menu {
+    enum Menu : SequentiallyComposable {
         
-        struct SetUpGame : ActionProtocol {}
-        
-        struct GoToHallOfFame : ActionProtocol {}
-        
-        struct GoToMainMenu : ActionProtocol {
-            fileprivate init() {}
-        }
-        
-        
-        static func goToMainMenu(_ appState: AppState) -> (Board.Resign?, GoToMainMenu) {
-            
-            if
-                case .playing(let state) = appState {
-                if case .human = state.players.x {
-                    return (Board.Resign(player: .x), GoToMainMenu())
-                }
-                else if case .human = state.players.o {
-                    return (Board.Resign(player: .o), GoToMainMenu())
-                }
-            }
-            
-            return (nil, GoToMainMenu())
-            
-            
-        }
+        case setUp
+        case goToHallOfFame
+        case main
         
     }
     
     enum GameConfig {
         
-        struct StartGame : ActionProtocol {
-            let selection : SelectedPlayers
-        }
+        case configure(action: ConfigAction)
+        case start(selection: SelectedPlayers)
         
-        struct SelectPlayer : Undoable {
-            let player : Player
-            var oldValue : PossiblePlayers
-            var newValue : PossiblePlayers
+        enum ConfigAction : Undoable {
+            
+            case selectPlayer(player: Player, oldValue: PossiblePlayers, newValue: PossiblePlayers)
+            case changeAIDelay(player: Player, oldValue: Int, newValue: Int)
+         
             mutating func invert() {
-                (oldValue, newValue) = (newValue, oldValue)
+                switch self {
+                case .selectPlayer(player: let player, oldValue: let oldValue, newValue: let newValue):
+                    self = .selectPlayer(player: player, oldValue: newValue, newValue: oldValue)
+                case .changeAIDelay(player: let player, oldValue: let oldValue, newValue: let newValue):
+                    self = .changeAIDelay(player: player, oldValue: newValue, newValue: oldValue)
+                }
             }
-        }
-        
-        struct ChangeDelay : Undoable, ActionForPlayer {
-            let player : Player
-            var oldValue : Int
-            var newValue : Int
-            mutating func invert() {
-                (oldValue, newValue) = (newValue, oldValue)
-            }
+            
         }
         
     }
     
     enum Stats {
         
-        struct RecordWin : ActionProtocol {
-            
-            let winner : GameStatsKey
-            let loser : GameStatsKey
-            
-        }
-        
-        struct RecordTie : ActionProtocol {
-            
-            let player1 : GameStatsKey
-            let player2 : GameStatsKey
-            
-        }
+        case recordWin(winner: GameStatsKey, loser: GameStatsKey)
+        case recordTie(player1: GameStatsKey, player2: GameStatsKey)
         
     }
     

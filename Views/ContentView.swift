@@ -12,7 +12,7 @@ import CasePaths
 
 struct ContentView: View {
     
-    @StateObject var store : CombineStore<AppState> = AppState.makeStore()
+    @StateObject var store : CombineStore<AppState, AppAction> = AppState.makeStore()
     
     @ViewBuilder
     var body: some View {
@@ -54,11 +54,7 @@ struct ContentView: View {
     }
     
     func backToMainMenu() {
-        let (maybeResign, gotoMainMenu) = Actions.Menu.goToMainMenu(store.state)
-        if let resign = maybeResign {
-            store.send(resign)
-        }
-        store.send(gotoMainMenu)
+        store.send(AppAction.goToMainMenu(store.state))
     }
     
     

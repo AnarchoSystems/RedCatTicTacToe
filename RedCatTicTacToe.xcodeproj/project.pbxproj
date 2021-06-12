@@ -610,7 +610,7 @@
 			repositoryURL = "https://github.com/AnarchoSystems/RedCat";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.1;
+				minimumVersion = 0.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
