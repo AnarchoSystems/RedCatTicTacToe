@@ -34,6 +34,7 @@ enum AppState : Emptyable {
     }
     
     var board : Board? {
+        get {
             switch self {
             case .mainMenu(let board):
                 return board
@@ -42,6 +43,22 @@ enum AppState : Emptyable {
             case .playing(let state):
                 return state.board
             }
+        }
+        set {
+            guard let newValue = newValue else {return}
+            switch self {
+            case .mainMenu(var board):
+                self = .empty
+                board = newValue
+                self = .mainMenu(board)
+            case .lobby, .hallOfFame:
+                return
+            case .playing(var state):
+                self = .empty
+                state.board = newValue
+                self = .playing(state)
+            }
+        }
     }
     
     var currentPlayer : PossiblePlayers? {
@@ -63,8 +80,9 @@ enum AppState : Emptyable {
         func dispatch(_ action: AppAction) -> VoidReducer<AppState> {
             switch action {
             case .board(action: let action):
-                return Board.reducer.bind(to: \.board).bind(to: /AppState.playing)
-                    .compose(with: Board.reducer.bind(to: /AppState.mainMenu))
+                return Board.reducer
+                    .bind(to: /Optional.some)
+                    .bind(to: \AppState.board)
                     .send(action)
             case .menu(action: let action):
                 return MenuReducer().send(action)
@@ -79,20 +97,6 @@ enum AppState : Emptyable {
                 return StatsReducer().send(action)
             }
         }
-        
-        /*
-         @usableFromInline
-         let body = AnyReducer(
-         gotoMainMenuReducer
-         .compose(with: playingReducer)
-         .compose(with: SelectedPlayers.reducer, aspect: /AppState.lobby)
-         .compose(with: goToHallOfFameReducer)
-         .compose(with: startGameReducer)
-         .compose(with: setUpReducer)
-         .compose(with: mainMenuBackgroundBoardReducer)
-         .compose(with: recordGameResultReducer)
-         )
-         */
         
     }
     
