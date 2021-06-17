@@ -16,16 +16,16 @@ struct SetUpScreen : View {
     
     func viewState(_ appState: AppState) -> SelectedPlayers {
         guard case .lobby(let players) = appState else {
-           return SelectedPlayers()
+            return SelectedPlayers()
         }
         return players
     }
     
     var body: some View {
         
-        store.withViewStore(onAction: AppAction.gameConfig,
-                            viewState) {store in
-            
+        store.withViewStore(viewState,
+                            onAction: AppAction.gameConfig) {
+            store in
             GeometryReader {geo in
                 VStack(spacing: 0) {
                     players(store.state)

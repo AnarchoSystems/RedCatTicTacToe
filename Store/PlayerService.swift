@@ -11,13 +11,11 @@ import RedCat
 
 class PlayerService : DetailService<AppState, Board?, AppAction> {
     
-    override func onAppInit(store: Store<AppState, AppAction>, environment: Dependencies) {
+    override func onAppInit() {
         store.send(AppAction.goToMainMenu(store.state))
     }
     
-    override func onUpdate(newValue: Board?,
-                           store: Store<AppState, AppAction>,
-                           environment: Dependencies) {
+    override func onUpdate(newValue: Board?) {
         if
             let board = newValue,
             let player = board.currentPlayer,
@@ -38,7 +36,7 @@ class PlayerService : DetailService<AppState, Board?, AppAction> {
 
 fileprivate extension RandomAI {
     
-    func makeMove(on board: Board, player: Player, store: Store<AppState, AppAction>) {
+    func makeMove(on board: Board, player: Player, store: StoreStub<AppState, AppAction>) {
         let possibleMoves = (0..<3).flatMap {row in
             (0..<3).map {col in (row, col)}
         }.filter {board[row: $0, col: $1] == nil}

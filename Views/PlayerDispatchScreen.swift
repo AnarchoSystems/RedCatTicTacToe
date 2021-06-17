@@ -39,8 +39,10 @@ struct AIModifyView : View {
     var value : Binding<Float> {
         Binding(get: {Float(ai.delayMs)},
                 set: {store.sendWithUndo(action($0),
-                                         embed: {AppAction.gameConfig(action: .configure(action: $0))},
-                                         undoManager: undoManager)})
+                                         undoManager: undoManager) {
+                    AppAction.gameConfig(action: .configure(action: $0))
+                }
+                })
     }
     
     func action(_ newValue: Float) -> AppAction.GameConfig.ConfigAction {

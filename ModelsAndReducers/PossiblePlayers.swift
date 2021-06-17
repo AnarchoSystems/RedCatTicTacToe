@@ -12,7 +12,7 @@ import CasePaths
 
 
 @dynamicMemberLookup
-enum PossiblePlayers : Emptyable {
+enum PossiblePlayers : Emptyable, Equatable {
     
     case human(HumanPlayer)
     case randomAI(RandomAI)

@@ -45,10 +45,9 @@ struct PlayerScreen : View {
                                                                     oldValue: selection[player],
                                                                     newValue: newValue)
         store.sendWithUndo(action,
-                           embed: {AppAction
-                            .gameConfig(action: .configure(action: $0))
-                           },
-                           undoManager: undoManager)
+                           undoManager: undoManager) {
+            AppAction.gameConfig(action: .configure(action: $0))
+           }
     }
     
     var binding : Binding<RawPlayer> {

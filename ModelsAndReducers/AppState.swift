@@ -8,7 +8,7 @@
 import RedCat
 import CasePaths
 
-struct PlayingState {
+struct PlayingState : Equatable {
     
     var board : Board
     var players : SelectedPlayers
@@ -17,20 +17,19 @@ struct PlayingState {
 
 enum AppState : Emptyable {
     
+    case empty
     case mainMenu(Board)
     case hallOfFame
     case lobby(SelectedPlayers)
     case playing(PlayingState)
     
-    static let empty : AppState = .mainMenu(Board())
-    
     static func makeStore() -> CombineStore<AppState, AppAction> {
-        Store.combineStore(initialState: .mainMenu(Board()),
-                           reducer: reducer,
-                           environment: [],
-                           services: [PlayerService(detail: \.board),
-                                      RecordGameService(),
-                                      ResetService(detail: \.board)])
+        Store(initialState: .empty,
+              erasing: reducer,
+              environment: [],
+              services: [PlayerService(detail: \.board),
+                         RecordGameService(),
+                         ResetService(detail: \.board)])
     }
     
     var board : Board? {
@@ -38,7 +37,7 @@ enum AppState : Emptyable {
             switch self {
             case .mainMenu(let board):
                 return board
-            case .lobby, .hallOfFame:
+            case .empty, .lobby, .hallOfFame:
                 return nil
             case .playing(let state):
                 return state.board
@@ -51,7 +50,7 @@ enum AppState : Emptyable {
                 self = .empty
                 board = newValue
                 self = .mainMenu(board)
-            case .lobby, .hallOfFame:
+            case .empty, .lobby, .hallOfFame:
                 return
             case .playing(var state):
                 self = .empty
@@ -65,7 +64,7 @@ enum AppState : Emptyable {
         switch self {
         case .mainMenu:
             return .randomAI(RandomAI())
-        case .lobby, .hallOfFame:
+        case .empty, .lobby, .hallOfFame:
             return nil
         case .playing(let state):
             return state.board.currentPlayer.map {state.players[$0]}

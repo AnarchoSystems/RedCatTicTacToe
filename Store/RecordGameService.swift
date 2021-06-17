@@ -10,13 +10,20 @@ import Foundation
 
 
 
-class RecordGameService : Service<AppState, AppAction> {
+class RecordGameService : DetailService<AppState, PlayingState?, AppAction> {
     
     var gameWasOver = false
     
-    override func afterUpdate(store: Store<AppState, AppAction>, action: AppAction, environment: Dependencies) {
+    init() {
+        super.init {
+            guard case .playing(let state) = $0 else {return nil}
+            return state
+        }
+    }
+    
+    override func onUpdate(newValue: PlayingState?) {
         guard
-            case .playing(let state) = store.state,
+            let state = newValue,
             state.board.gameIsOver else {
             gameWasOver = false
             return

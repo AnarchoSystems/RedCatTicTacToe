@@ -24,8 +24,9 @@ struct GameView : View {
     
     var body : some View {
         
-        store.withViewStore(onAction: AppAction.board,
-                            viewState) {store in
+        store.withViewStore(viewState,
+                            onAction: AppAction.board) {
+            store in
             GeometryReader {geo in
                 VStack(spacing: 0) {
                     stats(stage: store.state.board.stage,

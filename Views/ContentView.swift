@@ -25,6 +25,11 @@ struct ContentView: View {
     @ViewBuilder
     var dispatchView : some View {
         switch store.state {
+        case .empty:
+            ZStack {
+                menuBackground(Board()).disabled(true)
+                MainMenu()
+            }
         case .mainMenu(let board):
             ZStack {
                 menuBackground(board).disabled(true)

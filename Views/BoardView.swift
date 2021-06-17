@@ -23,7 +23,7 @@ struct BoardView : View {
                                           o: ai)
             return PlayingState(board: board,
                                 players: players)
-        case .hallOfFame, .lobby:
+        case .empty, .hallOfFame, .lobby:
             return PlayingState(board: Board(),
                                 players: SelectedPlayers())
         case .playing(let state):

@@ -10,7 +10,7 @@ import RedCat
 
 // MARK: Human
 
-struct HumanPlayer : PlayerDescriptor {
+struct HumanPlayer : PlayerDescriptor, Equatable {
     
     var title : String {
         "Human"
@@ -28,7 +28,7 @@ struct HumanPlayer : PlayerDescriptor {
 
 // MARK: RandomAI
 
-struct RandomAI : PlayerDescriptor {
+struct RandomAI : PlayerDescriptor, Equatable {
     
     var delayMs : Int
     

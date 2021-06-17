@@ -10,7 +10,7 @@ import CasePaths
 import Foundation
 
 
-struct SelectedPlayers {
+struct SelectedPlayers : Equatable {
     
     // swiftlint:disable identifier_name
     var x : PossiblePlayers = .human(HumanPlayer())
