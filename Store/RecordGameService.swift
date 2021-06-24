@@ -14,14 +14,12 @@ class RecordGameService : DetailService<AppState, PlayingState?, AppAction> {
     
     var gameWasOver = false
     
-    init() {
-        super.init {
-            guard case .playing(let state) = $0 else {return nil}
-            return state
-        }
+    func extractDetail(from state: AppState) -> PlayingState? {
+        guard case .playing(let state) = state else {return nil}
+        return state
     }
     
-    override func onUpdate(newValue: PlayingState?) {
+    func onUpdate(newValue: PlayingState?) {
         guard
             let state = newValue,
             state.board.gameIsOver else {
@@ -37,15 +35,23 @@ class RecordGameService : DetailService<AppState, PlayingState?, AppAction> {
         case .running:
             ()
         case .tie:
-            store.send(AppAction.stats(action: .recordTie(player1: GameStatsKey(player: .x,
-                                                                     rawPlayer: state.players.x.rawPlayer),
-                                               player2: GameStatsKey(player: .o,
-                                                                     rawPlayer: state.players.o.rawPlayer))))
+            store
+                .send(AppAction
+                        .stats(action: .recordTie(player1: GameStatsKey(
+                                                    player: .x,
+                                                    rawPlayer: state.players.x.rawPlayer),
+                                                  player2: GameStatsKey(
+                                                    player: .o,
+                                                    rawPlayer: state.players.o.rawPlayer))))
         case .won(let winner, _):
-            store.send(AppAction.stats(action: .recordWin(winner: GameStatsKey(player: winner,
-                                                                    rawPlayer: state.players[winner].rawPlayer),
-                                               loser: GameStatsKey(player: winner.other,
-                                                                   rawPlayer: state.players[winner.other].rawPlayer))))
+            store
+                .send(AppAction
+                        .stats(action: .recordWin(winner: GameStatsKey(
+                                                    player: winner,
+                                                    rawPlayer: state.players[winner].rawPlayer),
+                                                  loser: GameStatsKey(
+                                                    player: winner.other,
+                                                    rawPlayer: state.players[winner.other].rawPlayer))))
         }
     }
     

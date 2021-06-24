@@ -11,11 +11,15 @@ import RedCat
 
 class PlayerService : DetailService<AppState, Board?, AppAction> {
     
-    override func onAppInit() {
+    func extractDetail(from state: AppState) -> Board? {
+        state.board
+    }
+    
+    func onAppInit() {
         store.send(AppAction.goToMainMenu(store.state))
     }
     
-    override func onUpdate(newValue: Board?) {
+    func onUpdate(newValue: Board?) {
         if
             let board = newValue,
             let player = board.currentPlayer,

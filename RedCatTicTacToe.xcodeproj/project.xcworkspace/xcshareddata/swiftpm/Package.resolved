@@ -5,9 +5,9 @@
         "package": "RedCat",
         "repositoryURL": "https://github.com/AnarchoSystems/RedCat",
         "state": {
-          "branch": "main",
-          "revision": "8819bc3bfcb032975581a8129d9861e7ddba6b9a",
-          "version": null
+          "branch": null,
+          "revision": "330339e98dd6df281d10a11ba75f0daaaf08f8cc",
+          "version": "0.6.0"
         }
       },
       {

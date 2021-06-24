@@ -27,9 +27,9 @@ enum AppState : Emptyable {
         Store(initialState: .empty,
               erasing: reducer,
               environment: [],
-              services: [PlayerService(detail: \.board),
+              services: [PlayerService(),
                          RecordGameService(),
-                         ResetService(detail: \.board)])
+                         ResetService()])
     }
     
     var board : Board? {

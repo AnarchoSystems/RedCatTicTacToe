@@ -11,7 +11,7 @@ import RedCat
 
 class ResetService : DetailService<AppState, Board?, AppAction> {
     
-    override func onUpdate(newValue: Board?) {
+    func onUpdate(newValue: Board?) {
         guard
             case .mainMenu = store.state,
             let newValue = newValue else {return}
@@ -24,6 +24,10 @@ class ResetService : DetailService<AppState, Board?, AppAction> {
                 self.store.send(AppAction.goToMainMenu(self.store.state))
             }
         }
+    }
+    
+    func extractDetail(from state: AppState) -> Board? {
+        state.board
     }
     
 }
