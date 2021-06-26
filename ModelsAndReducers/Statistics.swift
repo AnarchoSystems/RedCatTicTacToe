@@ -56,14 +56,19 @@ extension AppState {
         
         func apply(_ action: AppAction.Stats,
                    to state: inout AppState) {
+            
             switch action {
+            
             case .recordWin(winner: let winner, loser: let loser):
                 state[gameStatsFor: winner].wins[loser].modify(default: 1, inc)
                 state[gameStatsFor: loser].losses[winner].modify(default: 1, inc)
+                
             case .recordTie(player1: let player1, player2: let player2):
                 state[gameStatsFor: player1].ties[player2].modify(default: 1, inc)
                 state[gameStatsFor: player2].ties[player1].modify(default: 1, inc)
+                
             }
+            
         }
         
     }

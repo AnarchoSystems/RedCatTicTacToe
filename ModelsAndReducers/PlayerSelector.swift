@@ -42,14 +42,18 @@ struct SelectedPlayers : Equatable {
         
         func apply(_ action: AppAction.GameConfig.ConfigAction,
                    to state: inout SelectedPlayers) {
+            
             switch action {
+            
             case .selectPlayer(player: let player, oldValue: _, newValue: let newValue):
                 state[player] = newValue
+                
             case .changeAIDelay(player: let player, oldValue: _, newValue: let newValue):
                 (/PossiblePlayers.randomAI).mutate(&state[player]) {randomAI in
                     randomAI.delayMs = newValue
                 }
             }
+            
         }
         
     }

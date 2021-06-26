@@ -27,7 +27,7 @@ class PlayerService : DetailService<AppState, Board?, AppAction> {
             switch playerDescriptor {
             case .human:
                 () // handled by UI
-            case .randomAI(let ai):// swiftlint:disable:this identifier_name
+            case .randomAI(let ai): // swiftlint:disable:this identifier_name
                 ai.makeMove(on: board,
                             player: player,
                             store: store)

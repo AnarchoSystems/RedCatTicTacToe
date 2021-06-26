@@ -77,41 +77,66 @@ enum AppState : Emptyable {
     struct AppReducer : DispatchReducerProtocol {
         
         func dispatch(_ action: AppAction) -> VoidReducer<AppState> {
+            
             switch action {
+            
             case .board(action: let action):
                 return Board.reducer
                     .bind(to: /Optional.some)
                     .bind(to: \AppState.board)
                     .send(action)
+                
             case .menu(action: let action):
                 return MenuReducer().send(action)
+                
             case .gameConfig(action: let action):
-                switch action {
-                case .configure(action: let action):
-                    return SelectedPlayers.reducer.bind(to: /AppState.lobby).send(action)
-                case .start(selection: let selection):
-                    return startGameReducer.send(selection)
-                }
+                return ConfigReducer().send(action)
+                
             case .stats(action: let action):
                 return StatsReducer().send(action)
             }
+            
         }
         
     }
     
+    struct ConfigReducer : DispatchReducerProtocol {
+        
+        func dispatch(_ action: AppAction.GameConfig) -> VoidReducer<AppState> {
+            
+            switch action {
+            case .configure(action: let action):
+                return SelectedPlayers
+                    .reducer
+                    .bind(to: /AppState.lobby)
+                    .send(action)
+                
+            case .start(selection: let selection):
+                return startGameReducer
+                    .send(selection)
+            }
+            
+        }
+        
+    }
     
     struct MenuReducer : ReducerProtocol {
         
         func apply(_ action: AppAction.Menu,
                    to state: inout AppState) {
+            
             switch action {
+            
             case .setUp:
                 state = .lobby(SelectedPlayers())
+                
             case .goToHallOfFame:
                 state = .hallOfFame
+                
             case .main:
                 state = .mainMenu(Board())
             }
+            
         }
         
     }

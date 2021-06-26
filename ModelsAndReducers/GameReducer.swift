@@ -98,10 +98,13 @@ extension Board {
                    to state: inout Board) {
             
             switch action {
+            
             case .makeMove(player: let player, row: let row, col: let col):
                 makeMove(player: player, row: row, col: col, board: &state)
+                
             case .resign(player: let player):
                 resign(player: player, from: &state)
+                
             }
             
         }
